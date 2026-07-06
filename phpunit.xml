@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="./vendor/phpunit/phpunit/phpunit.xsd"
+         bootstrap="vendor/autoload.php"
+         colors="true"
+>
+    <testsuites>
+        <testsuite name="Unit">
+            <directory>tests/Unit</directory>
+        </testsuite>
+        <testsuite name="Feature">
+            <directory>tests/Feature</directory>
+        </testsuite>
+    </testsuites>
+    <source>
+        <include>
+            <directory>app</directory>
+        </include>
+    </source>
+    <php>
+        <env name="APP_ENV" value="testing"/>
+        <env name="APP_MAINTENANCE_DRIVER" value="file"/>
+        <env name="BCRYPT_ROUNDS" value="4"/>
+        <env name="MAIL_MAILER" value="array"/>
+        <env name="QUEUE_CONNECTION" value="sync"/>
+        <env name="SESSION_DRIVER" value="array"/>
+
+        <!--
+            deliberately NOT sqlite - the brief instant-rejects sqlite, and several
+            things under test (partial unique index, jsonb, pg_try_advisory_lock)
+            are postgres-specific and can't run against sqlite at all. host/port/
+            user/password fall through from .env; only the database name changes,
+            so create this once: `createdb findyourinfluencer_test` (or via pgAdmin)
+        -->
+        <env name="DB_CONNECTION" value="pgsql"/>
+        <env name="DB_DATABASE" value="findyourinfluencer_test"/>
+
+        <!--
+            separate redis db index from dev (0) and cache (1) - tests/TestCase.php
+            flushes this db before every test so circuit breaker/rate limiter/webhook
+            nonce state never leaks between tests or pollutes real dev data
+        -->
+        <env name="REDIS_DB" value="2"/>
+    </php>
+</phpunit>

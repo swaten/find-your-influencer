@@ -1,0 +1,224 @@
+/* ============================================================
+   FINDYOURINFLUENCER — Light Mode Theme
+   File: resources/css/light.css
+
+   Activated by setting data-theme="light" on <html>.
+   Overrides every CSS variable from obsidian-gold.css with
+   light-mode equivalents. The gold accent (#B8860B) is
+   kept as the brand constant across both themes.
+
+   Structure:
+     1. [data-theme="light"] variables
+     2. Bootstrap / form / modal overrides
+     3. Scrollbar & shadow overrides
+     4. Marketing Dashboard — light overrides
+   ============================================================ */
+
+
+/* ── 1. LIGHT MODE VARIABLES ───────────────────────────────── */
+[data-theme="light"] {
+
+  /* Surfaces — Soft Cloud */
+  --tk-bg-base:      #F2F4F7;
+  --tk-bg-surface:   #FFFFFF;
+  --tk-bg-raised:    #EDF0F5;
+  --tk-bg-overlay:   #E4E8F0;
+  --tk-bg-hover:     #D8DCE6;
+
+  /* Borders */
+  --tk-border-subtle:  rgba(0, 0, 0, 0.05);
+  --tk-border-default: rgba(0, 0, 0, 0.10);
+  --tk-border-strong:  rgba(0, 0, 0, 0.18);
+
+  /* Typography */
+  --tk-text-primary:   #0D1117;
+  --tk-text-secondary: #4A5568;
+  --tk-text-muted:     #8896A7;
+  --tk-text-disabled:  #BBC4D0;
+
+  /* Accent — Electric Emerald (brand constant) */
+  --tk-accent:         #B8860B;
+  --tk-accent-soft:    rgba(184, 134, 11, 0.10);
+  --tk-accent-glow:    rgba(184, 134, 11, 0.22);
+  --tk-accent-hover:   #9A7209;
+
+  /* Status — Green */
+  --tk-green:          #1DA162;
+  --tk-green-soft:     rgba(29, 161, 98, 0.10);
+  --tk-green-glow:     rgba(29, 161, 98, 0.20);
+
+  /* Status — Yellow */
+  --tk-yellow:         #C98A00;
+  --tk-yellow-soft:    rgba(201, 138, 0, 0.10);
+  --tk-yellow-glow:    rgba(201, 138, 0, 0.20);
+
+  /* Status — Red */
+  --tk-red:            #D93025;
+  --tk-red-soft:       rgba(217, 48, 37, 0.09);
+  --tk-red-glow:       rgba(217, 48, 37, 0.18);
+
+  /* Status — Cyan */
+  --tk-cyan:           #0284C7;
+  --tk-cyan-soft:      rgba(2, 132, 199, 0.10);
+
+  /* Status — Purple */
+  --tk-purple:         #7C3AED;
+  --tk-purple-soft:    rgba(124, 58, 237, 0.10);
+
+  /* Status — Orange */
+  --tk-orange:         #D46B0A;
+  --tk-orange-soft:    rgba(212, 107, 10, 0.10);
+
+  /* Layout (unchanged) */
+  --tk-sidebar-width:  220px;
+  --tk-navbar-height:  50px;
+
+  /* Radius (unchanged) */
+  --tk-radius-sm:  4px;
+  --tk-radius-md:  6px;
+  --tk-radius-lg:  8px;
+  --tk-radius-xl:  12px;
+
+  /* Theme toggle */
+  --tk-theme-icon-color:  #4A5568;
+  --tk-theme-bg:          rgba(0, 0, 0, 0.04);
+  --tk-theme-border:      rgba(0, 0, 0, 0.09);
+  --tk-theme-bg-hover:    #D8DCE6;
+
+  /* Marketing Dashboard tokens — original light values */
+  --color-background-primary:   #ffffff;
+  --color-background-secondary: #f9f9f8;
+  --color-background-tertiary:  #f4f4f3;
+  --color-border-tertiary:      #e5e5e4;
+  --color-text-primary:         #1a1a18;
+  --color-text-secondary:       #888780;
+  --border-radius-lg:           12px;
+  --border-radius-md:           8px;
+}
+
+
+/* ── 2. BOOTSTRAP / FORM / MODAL OVERRIDES ─────────────────── */
+/*
+  thinkone.css uses !important on form controls — match it
+  here so light mode wins cleanly.
+*/
+[data-theme="light"] body {
+  background-color: var(--tk-bg-base);
+  color: var(--tk-text-primary);
+}
+
+[data-theme="light"] .form-control,
+[data-theme="light"] .form-select,
+[data-theme="light"] .tk-input {
+  background-color: var(--tk-bg-surface) !important;
+  border-color: var(--tk-border-default) !important;
+  color: var(--tk-text-primary) !important;
+}
+
+[data-theme="light"] .form-control:focus,
+[data-theme="light"] .form-select:focus,
+[data-theme="light"] .tk-input:focus {
+  background-color: var(--tk-bg-surface) !important;
+  border-color: var(--tk-accent-glow) !important;
+  box-shadow: 0 0 0 3px var(--tk-accent-soft) !important;
+  color: var(--tk-text-primary) !important;
+}
+
+[data-theme="light"] .modal-content {
+  background: var(--tk-bg-surface) !important;
+  border: 0.5px solid var(--tk-border-default) !important;
+  color: var(--tk-text-primary) !important;
+}
+
+[data-theme="light"] input[type="file"].form-control::file-selector-button,
+[data-theme="light"] input[type="file"].tk-input::file-selector-button {
+  background: var(--tk-bg-overlay);
+  border-right-color: var(--tk-border-default);
+  color: var(--tk-text-secondary);
+}
+
+[data-theme="light"] input[type="file"].form-control::file-selector-button:hover,
+[data-theme="light"] input[type="file"].tk-input::file-selector-button:hover {
+  background: var(--tk-bg-hover);
+  color: var(--tk-text-primary);
+}
+
+
+/* ── 3. SCROLLBAR & SHADOWS ────────────────────────────────── */
+[data-theme="light"] ::-webkit-scrollbar-thumb {
+  background: var(--tk-border-default);
+}
+
+[data-theme="light"] ::-webkit-scrollbar-thumb:hover {
+  background: var(--tk-accent);
+}
+
+[data-theme="light"] .tk-table-wrap::-webkit-scrollbar-track {
+  background: var(--tk-bg-raised);
+}
+
+[data-theme="light"] .tk-table-wrap::-webkit-scrollbar-thumb {
+  background: var(--tk-border-strong);
+}
+
+[data-theme="light"] .tk-notif-dropdown {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .tk-card {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .tk-stat-card {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+
+/* ── 4. MARKETING DASHBOARD — light overrides ──────────────── */
+/*
+  Component structure and default (dark) styles live in
+  thinkone-dark.css. Most elements auto-adapt via CSS variables.
+  Only the three hardcoded-colour emerald elements need
+  their original light appearance restored here.
+*/
+
+/* Live badge — bright mint tint */
+[data-theme="light"] .badge-live {
+  background: #E1F5EE;
+  color: #0F6E56;
+  border-color: #5DCAA5;
+}
+
+/* KPI card — subtle shadow on white */
+[data-theme="light"] .kpi-card {
+  border-color: var(--color-border-tertiary);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+/* Generic card shell — lift shadow */
+[data-theme="light"] .card-freetzo {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+/* AI insight card — original bright mint background */
+[data-theme="light"] .ai-card-freetzo {
+  background: #E1F5EE;
+  border-color: #5DCAA5;
+}
+
+/* AI insight text — deep forest green */
+[data-theme="light"] .ai-text {
+  color: #0F6E56;
+}
+
+/* AI action buttons — white pill with teal border */
+[data-theme="light"] .ai-action-btn {
+  background: #ffffff;
+  border-color: #5DCAA5;
+  color: #0F6E56;
+}
+
+[data-theme="light"] .ai-action-btn:hover {
+  background: #E1F5EE;
+  border-color: #0F6E56;
+}

@@ -1,0 +1,7 @@
+@import './base.css';
+
+/* obsidian gold is the default theme - overrides base.css :root */
+@import './obsidian-gold.css';
+
+/* light theme - wins when <html data-theme="light"> */
+@import './light.css';

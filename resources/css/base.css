@@ -1,0 +1,6594 @@
+/* ============================================================
+   FINDYOURINFLUENCER — Design System CSS
+   resources/css/base.css
+   ============================================================ */
+
+/* ── 1. CSS VARIABLES (Design Tokens) ─────────────────────── */
+:root {
+  /* Surface layers — Neutral, high-end dark shades */
+  --tk-bg-base:      #0B0E11;   /* True midnight background */
+  --tk-bg-surface:   #14181D;   /* Panels, Sidebar, Navbar */
+  --tk-bg-raised:    #1C2128;   /* Inputs, elevated modules */
+  --tk-bg-overlay:   #22272E;   /* Dropdowns, modals */
+  --tk-bg-hover:     #2D333B;   /* Interactive states */
+
+  /* Precision Borders */
+  --tk-border-subtle:  rgba(255, 255, 255, 0.04);
+  --tk-border-default: rgba(255, 255, 255, 0.08);
+  --tk-border-strong:  rgba(255, 255, 255, 0.15);
+
+  /* Typography */
+  --tk-text-primary:   #F0F3F6;
+  --tk-text-secondary: #9DA5B1; /* Clean slate-grey text */
+  --tk-text-muted:     #636E7B;
+  --tk-text-disabled:  #3D444D;
+
+  /* Primary Accent — Electric Emerald (Modern, High-Tech) */
+  --tk-accent:       #2EB872;
+  --tk-accent-soft:  rgba(46, 184, 114, 0.08);
+  --tk-accent-glow:  rgba(46, 184, 114, 0.20);
+
+  /* Functional Status Colors */
+  --tk-green:        #2EB872;
+  --tk-green-soft:   rgba(46, 184, 114, 0.10);
+  
+  --tk-yellow:       #E3B341;
+  --tk-yellow-soft:  rgba(227, 179, 65, 0.10);
+
+  --tk-red:          #F85149;
+  --tk-red-soft:     rgba(248, 81, 73, 0.10);
+
+  --tk-cyan:         #38BDF8;
+  --tk-cyan-soft:    rgba(56, 189, 248, 0.10);
+
+  /* Layout dimensions */
+  --tk-sidebar-width: 220px;
+  --tk-navbar-height: 50px;
+
+  /* Radius (Tighter, more professional corners) */
+  --tk-radius-sm:  4px;
+  --tk-radius-md:  8px;
+  --tk-radius-lg:  10px;
+  --tk-radius-xl:  12px;
+
+  --tk-accent-hover:   #35D082;                    /* Used on primary button hover  */
+  --tk-yellow-glow:    rgba(227, 179, 65,  0.20);  /* Yellow border glow            */
+  --tk-green-glow:     rgba(46,  184, 114, 0.20);  /* Already in emerald, add here  */
+  --tk-red-glow:       rgba(248, 81,  73,  0.20);  /* Red border glow               */
+  --tk-purple:         #8957E5;
+  --tk-purple-soft:    rgba(137, 87, 229, 0.12);
+  --tk-orange:         #F0883E;
+  --tk-orange-soft:    rgba(240, 136, 62, 0.12);
+
+}
+
+
+/* ── 2. GLOBAL BASE ────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--tk-bg-base);
+  color: var(--tk-text-primary);
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--tk-accent); }
+a:hover { color: var(--tk-accent); opacity: 0.85; }
+
+
+/* ── 3. LAYOUT SHELL ───────────────────────────────────────── */
+#layout-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* content area sits to the right of the fixed sidebar */
+.tk-content-page {
+  margin-left: var(--tk-sidebar-width);
+  margin-top: var(--tk-navbar-height);
+  min-height: calc(100vh - var(--tk-navbar-height));
+  background: var(--tk-bg-base);
+}
+
+.tk-page-inner {
+  padding: 22px 24px;
+  width: 100%;           /* fills the full main area — no content-width leak */
+}
+
+
+/* ── 4. NAVBAR ─────────────────────────────────────────────── */
+.tk-navbar {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: var(--tk-navbar-height);
+  z-index: 1040;
+  background: var(--tk-bg-surface);
+  border-bottom: 0.5px solid var(--tk-border-subtle);
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  gap: 12px;
+}
+
+/* Brand */
+.tk-navbar-brand-area {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.brand-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  background: #2EB872;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.brand-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--tk-text-primary);
+  letter-spacing: 0.1px;
+}
+
+.brand-name span { color: var(--tk-accent); }
+
+.tk-navbar-divider {
+  width: 0.5px;
+  height: 16px;
+  background: var(--tk-border-default);
+  margin: 0 4px;
+}
+
+/* Breadcrumb */
+.tk-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12.5px;
+}
+
+.bc-sep   { color: var(--tk-text-muted); font-size: 11px; }
+.bc-current { color: var(--tk-text-primary); font-weight: 500; }
+
+/* Center area */
+.navbar-center {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 8px;
+  min-width: 0;
+}
+
+/* Global search */
+.tk-global-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--tk-bg-raised);
+  border: 0.5px solid var(--tk-border-subtle);
+  border-radius: var(--tk-radius-md);
+  padding: 0 10px;
+  height: 30px;
+  flex: 1;
+  max-width: 260px;
+  cursor: text;
+  transition: border-color 0.15s;
+}
+
+.tk-global-search:hover,
+.tk-global-search:focus-within {
+  border-color: var(--tk-border-default);
+}
+
+.tk-global-search .search-icon {
+  color: var(--tk-text-muted);
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.tk-global-search input {
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 12px;
+  color: var(--tk-text-primary);
+  width: 100%;
+  font-family: inherit;
+}
+
+.tk-global-search input::placeholder { color: var(--tk-text-muted); }
+
+.search-kbd {
+  margin-left: auto;
+  font-size: 10px;
+  padding: 1px 5px;
+  background: var(--tk-bg-overlay);
+  border: 0.5px solid var(--tk-border-default);
+  border-radius: 4px;
+  color: var(--tk-text-muted);
+  white-space: nowrap;
+}
+
+/* Right actions */
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+/* Status pill */
+.tk-status-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--tk-green-soft);
+  border: 0.5px solid var(--tk-green-glow);
+  border-radius: 20px;
+  padding: 4px 11px;
+  font-size: 11px;
+  color: var(--tk-green);
+}
+
+.tk-status-pill.disconnected {
+  background: rgba(78, 90, 107, 0.15);
+  border-color: var(--tk-border-default);
+  color: var(--tk-text-muted);
+}
+
+.pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--tk-green);
+  animation: tk-pulse 2s ease-in-out infinite;
+}
+
+@keyframes tk-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.35; }
+}
+
+/* Icon buttons */
+.tk-icon-btn {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--tk-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--tk-text-secondary);
+  background: transparent;
+  border: 0.5px solid transparent;
+  transition: all 0.12s;
+  text-decoration: none;
+}
+
+.tk-icon-btn:hover {
+  background: var(--tk-bg-raised);
+  border-color: var(--tk-border-subtle);
+  color: var(--tk-text-primary);
+}
+
+/* Notification badge */
+.tk-badge {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  min-width: 16px;
+  height: 16px;
+  background: var(--tk-red);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 3px;
+  border: 1.5px solid var(--tk-bg-surface);
+}
+
+/* Avatar */
+.tk-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--tk-accent), var(--tk-purple));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  border: 1.5px solid var(--tk-border-default);
+  flex-shrink: 0;
+}
+
+/* Notification dropdown */
+.tk-notif-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 320px;
+  background: var(--tk-bg-overlay);
+  border: 0.5px solid var(--tk-border-default);
+  border-radius: var(--tk-radius-lg);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  z-index: 1050;
+  display: none;
+  overflow: hidden;
+}
+
+.tk-notif-dropdown.open { display: block; }
+
+.tk-notif-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 0.5px solid var(--tk-border-subtle);
+}
+
+.tk-notif-header h6 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--tk-text-primary);
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+.tk-notif-scroll {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.tk-notif-item {
+  display: flex;
+  gap: 10px;
+  padding: 11px 16px;
+  cursor: pointer;
+  border-bottom: 0.5px solid var(--tk-border-subtle);
+  transition: background 0.12s;
+}
+
+.tk-notif-item:hover       { background: var(--tk-bg-hover); }
+.tk-notif-item.unread      { background: rgba(79, 142, 247, 0.04); }
+.tk-notif-item:last-child  { border-bottom: none; }
+
+.tk-notif-icon-wrap {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--tk-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.tk-notif-title   { font-size: 12px; font-weight: 500; color: var(--tk-text-primary); }
+.tk-notif-text    { font-size: 11.5px; color: var(--tk-text-secondary); margin-top: 2px; }
+.tk-notif-time    { font-size: 10.5px; color: var(--tk-text-muted); margin-top: 3px; }
+
+.tk-notif-progress {
+  height: 3px;
+  background: var(--tk-border-subtle);
+  border-radius: 2px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+.tk-notif-progress-fill {
+  height: 100%;
+  background: var(--tk-accent);
+  border-radius: 2px;
+  transition: width 0.3s;
+}
+
+.tk-notif-footer {
+  padding: 10px 16px;
+  font-size: 12px;
+  color: var(--tk-accent);
+  text-align: center;
+  cursor: pointer;
+  border-top: 0.5px solid var(--tk-border-subtle);
+}
+
+.tk-notif-footer:hover { opacity: 0.8; }
+
+
+/* ── 5. SIDEBAR ────────────────────────────────────────────── */
+.tk-sidebar {
+  position: fixed;
+  top: var(--tk-navbar-height);
+  left: 0;
+  bottom: 0;
+  width: var(--tk-sidebar-width);
+  background: var(--tk-bg-surface);
+  border-right: 0.5px solid var(--tk-border-subtle);
+  display: flex;
+  flex-direction: column;
+  z-index: 1030;
+  overflow: hidden;
+}
+
+/* Module selector */
+.tk-module-selector {
+  padding: 12px 12px 8px;
+  border-bottom: 0.5px solid var(--tk-border-subtle);
+}
+
+.tk-module-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--tk-bg-raised);
+  border: 0.5px solid var(--tk-border-default);
+  border-radius: var(--tk-radius-md);
+  padding: 8px 10px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.tk-module-btn:hover { border-color: var(--tk-border-strong); }
+
+.module-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.tk-module-btn span {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--tk-text-primary);
+}
+
+.module-chevron {
+  margin-left: auto;
+  color: var(--tk-text-muted);
+  font-size: 14px;
+}
+
+/* Sidebar search */
+.tk-sidebar-search {
+  padding: 10px 12px;
+  border-bottom: 0.5px solid var(--tk-border-subtle);
+}
+
+.tk-sidebar-search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--tk-bg-raised);
+  border: 0.5px solid var(--tk-border-subtle);
+  border-radius: var(--tk-radius-md);
+  padding: 6px 10px;
+  transition: border-color 0.15s;
+}
+
+.tk-sidebar-search-wrap:focus-within {
+  border-color: var(--tk-border-default);
+}
+
+.tk-sidebar-search-wrap .search-ic {
+  color: var(--tk-text-muted);
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+.tk-sidebar-search-wrap input {
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 12px;
+  color: var(--tk-text-primary);
+  width: 100%;
+  font-family: inherit;
+}
+
+.tk-sidebar-search-wrap input::placeholder { color: var(--tk-text-muted); }
+
+/* Nav */
+.tk-sidebar-nav {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 10px;
+}
+
+.tk-sidebar-nav::-webkit-scrollbar { width: 3px; }
+.tk-sidebar-nav::-webkit-scrollbar-thumb {
+  background: var(--tk-border-default);
+  border-radius: 2px;
+}
+
+.tk-nav-section { margin-bottom: 4px; }
+
+.tk-nav-label {
+  display: block;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--tk-text-muted);
+  padding: 10px 8px 5px;
+}
+
+/* Nav items */
+.tk-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 8px;
+  border-radius: var(--tk-radius-md);
+  cursor: pointer;
+  color: var(--tk-text-secondary);
+  font-size: 12.5px;
+  font-weight: 400;
+  transition: all 0.12s;
+  margin-bottom: 1px;
+  text-decoration: none;
+  border: 0.5px solid transparent;
+  user-select: none;
+}
+
+.tk-nav-item:hover {
+  color: var(--tk-text-primary);
+  background: var(--tk-bg-overlay);
+  text-decoration: none;
+}
+
+.tk-nav-item.active {
+  color: var(--tk-accent);
+  background: var(--tk-accent-soft);
+  border-color: rgba(79, 142, 247, 0.18);
+  font-weight: 500;
+}
+
+.tk-nav-icon {
+  width: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+/* Lucide SVG icons inside nav */
+.tk-nav-icon svg,
+.tk-nav-item svg:first-child {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  stroke-width: 1.75;
+}
+
+.tk-nav-arrow svg {
+  width: 13px;
+  height: 13px;
+  stroke-width: 1.75;
+}
+
+.tk-nav-item.active .tk-nav-icon { color: var(--tk-accent); }
+.tk-nav-item:hover .tk-nav-icon  { color: var(--tk-text-secondary); }
+.tk-nav-item.active > svg:first-child { color: var(--tk-accent); }
+.tk-nav-item:hover > svg:first-child  { color: var(--tk-text-secondary); }
+
+/* Badge / count on nav */
+.tk-nav-count {
+  margin-left: auto;
+  font-size: 9.5px;
+  font-weight: 600;
+  padding: 1px 6px;
+  border-radius: 20px;
+  background: var(--tk-accent-soft);
+  color: var(--tk-accent);
+}
+
+/* Expandable children */
+.tk-nav-arrow {
+  margin-left: auto;
+  font-size: 14px;
+  color: var(--tk-text-muted);
+  transition: transform 0.2s;
+}
+
+.tk-nav-item.has-children.open .tk-nav-arrow {
+  transform: rotate(90deg);
+}
+
+.tk-nav-children {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.2s ease;
+  padding-left: 14px;
+}
+
+.tk-nav-children.open {
+  max-height: 400px;
+}
+
+/* User footer */
+.tk-sidebar-footer {
+  padding: 10px 12px;
+  border-top: 0.5px solid var(--tk-border-subtle);
+}
+
+.tk-sidebar-user {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 9px;
+  border-radius: var(--tk-radius-md);
+  background: var(--tk-bg-raised);
+  border: 0.5px solid var(--tk-border-subtle);
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.tk-sidebar-user:hover { border-color: var(--tk-border-default); }
+
+.tk-sidebar-user .user-info { flex: 1; min-width: 0; }
+
+.tk-sidebar-user .user-name {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--tk-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tk-sidebar-user .user-role {
+  font-size: 10.5px;
+  color: var(--tk-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.logout-btn {
+  color: var(--tk-text-muted);
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+/* Mobile overlay */
+@media (max-width: 991px) {
+  .tk-sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.2s ease;
+  }
+
+  .tk-sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .tk-content-page {
+    margin-left: 0 !important;
+  }
+}
+
+
+/* ── 6. PAGE HEADER ────────────────────────────────────────── */
+.tk-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  gap: 12px;
+}
+
+.tk-page-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--tk-text-primary);
+  letter-spacing: -0.3px;
+  line-height: 1.2;
+}
+
+.tk-page-subtitle {
+  font-size: 12.5px;
+  color: var(--tk-text-muted);
+  margin-top: 3px;
+}
+
+.tk-page-subtitle span,
+.tk-page-subtitle a {
+  color: var(--tk-accent);
+  font-weight: 500;
+}
+
+.tk-page-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+
+/* ── 7. BUTTONS ────────────────────────────────────────────── */
+.tk-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 500;
+  border-radius: var(--tk-radius-md);
+  cursor: pointer;
+  border: 0.5px solid transparent;
+  padding: 7px 14px;
+  transition: all 0.15s;
+  font-family: inherit;
+  white-space: nowrap;
+  text-decoration: none;
+  line-height: 1;
+}
+
+.tk-btn-primary {
+  background: var(--tk-accent);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.tk-btn-primary:hover {
+  background: var(--tk-accent-hover);
+  color: #fff;
+  text-decoration: none;
+}
+
+.tk-btn-ghost {
+  background: transparent;
+  color: var(--tk-text-secondary);
+  border-color: var(--tk-border-default);
+}
+
+.tk-btn-ghost:hover {
+  background: var(--tk-bg-raised);
+  color: var(--tk-text-primary);
+  border-color: var(--tk-border-strong);
+}
+
+.tk-btn-danger {
+  background: var(--tk-red-soft);
+  color: var(--tk-red);
+  border-color: var(--tk-red-glow);
+}
+
+.tk-btn-danger:hover { background: rgba(240, 81, 106, 0.2); }
+
+.tk-btn-sm  { padding: 5px 10px; font-size: 11.5px; }
+.tk-btn-lg  { padding: 10px 20px; font-size: 14px; }
+
+.tk-btn-icon {
+  padding: 6px;
+  background: var(--tk-bg-raised);
+  border-color: var(--tk-border-default);
+  color: var(--tk-text-secondary);
+}
+
+.tk-btn-icon:hover {
+  color: var(--tk-text-primary);
+  border-color: var(--tk-border-strong);
+}
+
+
+/* ── 8. CARD ───────────────────────────────────────────────── */
+.tk-card {
+  background: var(--tk-bg-surface);
+  border: 0.5px solid var(--tk-border-subtle);
+  border-radius: var(--tk-radius-lg);
+  overflow: hidden;
+  width: 100%;           /* always fills the column/grid cell */
+  margin-bottom: 16px;
+}
+
+.tk-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 0.5px solid var(--tk-border-subtle);
+  gap: 12px;
+}
+
+.tk-card-title {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--tk-text-primary);
+  margin: 0;
+}
+
+.tk-card-subtitle {
+  font-size: 11.5px;
+  color: var(--tk-text-muted);
+  margin: 2px 0 0;
+}
+
+.tk-card-body {
+  padding: 16px 18px;
+}
+
+.tk-card-body.no-pad {
+  padding: 0;
+}
+
+
+/* ── 9. STAT CARDS ─────────────────────────────────────────── */
+/*
+  IMPORTANT: Use Bootstrap's grid ONLY for the column wrapper.
+  The card itself MUST be width:100% (default for block elements).
+  Never set a fixed pixel width on .tk-stat-card.
+*/
+.tk-stat-card {
+  position: relative;
+  background: var(--tk-bg-surface);
+  border: 0.5px solid var(--tk-border-subtle);
+  border-radius: var(--tk-radius-lg);
+  padding: 16px 18px 20px;  /* bottom pad for the bar */
+  width: 100%;
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+
+.tk-stat-card:hover { border-color: var(--tk-border-default); }
+
+/* Colored top strip */
+.tk-stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  border-radius: var(--tk-radius-lg) var(--tk-radius-lg) 0 0;
+}
+
+.tk-stat-card.blue::before   { background: linear-gradient(90deg, var(--tk-accent),  transparent); }
+.tk-stat-card.green::before  { background: linear-gradient(90deg, var(--tk-green),   transparent); }
+.tk-stat-card.yellow::before { background: linear-gradient(90deg, var(--tk-yellow),  transparent); }
+.tk-stat-card.cyan::before   { background: linear-gradient(90deg, var(--tk-cyan),    transparent); }
+.tk-stat-card.purple::before { background: linear-gradient(90deg, var(--tk-purple),  transparent); }
+.tk-stat-card.red::before    { background: linear-gradient(90deg, var(--tk-red),     transparent); }
+.tk-stat-card.orange::before { background: linear-gradient(90deg, var(--tk-orange),  transparent); }
+
+/* Floating icon — top right */
+.sc-icon {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--tk-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sc-icon svg,
+.sc-icon i { width: 16px; height: 16px; font-size: 16px; }
+
+.sc-icon.blue   { background: var(--tk-accent-soft);  color: var(--tk-accent);  }
+.sc-icon.green  { background: var(--tk-green-soft);   color: var(--tk-green);   }
+.sc-icon.yellow { background: var(--tk-yellow-soft);  color: var(--tk-yellow);  }
+.sc-icon.cyan   { background: var(--tk-cyan-soft);    color: var(--tk-cyan);    }
+.sc-icon.purple { background: var(--tk-purple-soft);  color: var(--tk-purple);  }
+.sc-icon.red    { background: var(--tk-red-soft);     color: var(--tk-red);     }
+.sc-icon.orange { background: var(--tk-orange-soft);  color: var(--tk-orange);  }
+
+/* Label */
+.sc-label {
+  font-size: 10.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--tk-text-muted);
+  margin-bottom: 10px;
+  padding-right: 42px; /* don't overlap the icon */
+}
+
+/* Value — colored by variant */
+.sc-value {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.sc-value.blue   { color: var(--tk-accent);  }
+.sc-value.green  { color: var(--tk-green);   }
+.sc-value.yellow { color: var(--tk-yellow);  }
+.sc-value.cyan   { color: var(--tk-cyan);    }
+.sc-value.purple { color: var(--tk-purple);  }
+.sc-value.red    { color: var(--tk-red);     }
+.sc-value.orange { color: var(--tk-orange);  }
+
+/* Sub label */
+.ph-sub {
+  font-size: 11.5px;
+  color: var(--tk-text-muted);
+}
+
+/* Bottom progress bar — spans full card width */
+.tk-stat-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--tk-border-subtle);
+}
+
+.tk-stat-bar-fill {
+  height: 100%;
+  border-radius: 0 2px 0 0;
+  transition: width 0.6s ease;
+}
+
+.tk-stat-bar-fill.blue   { background: linear-gradient(90deg, var(--tk-accent),  var(--tk-purple)); }
+.tk-stat-bar-fill.green  { background: linear-gradient(90deg, var(--tk-green),   var(--tk-cyan));   }
+.tk-stat-bar-fill.yellow { background: linear-gradient(90deg, var(--tk-yellow),  var(--tk-orange)); }
+.tk-stat-bar-fill.cyan   { background: linear-gradient(90deg, var(--tk-cyan),    var(--tk-accent)); }
+.tk-stat-bar-fill.purple { background: linear-gradient(90deg, var(--tk-purple),  var(--tk-accent)); }
+.tk-stat-bar-fill.red    { background: linear-gradient(90deg, var(--tk-red),     var(--tk-orange)); }
+.tk-stat-bar-fill.orange { background: linear-gradient(90deg, var(--tk-orange),  var(--tk-yellow)); }
+
+
+/* ── 10. DATA TABLE ────────────────────────────────────────── */
+/* Toolbar row above table */
+.tk-table-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  border-bottom: 0.5px solid var(--tk-border-subtle);
+  gap: 10px;
+}
+
+.tt-left, .tt-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Select */
+.tk-select {
+  background: var(--tk-bg-raised);
+  border: 0.5px solid var(--tk-border-default);
+  color: var(--tk-text-secondary);
+  border-radius: var(--tk-radius-sm);
+  padding: 5px 10px;
+  font-size: 12px;
+  font-family: inherit;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.tk-select:hover { border-color: var(--tk-border-strong); }
+
+/* Search inside table toolbar */
+.tk-table-search {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--tk-bg-raised);
+  border: 0.5px solid var(--tk-border-default);
+  border-radius: var(--tk-radius-md);
+  padding: 6px 10px;
+  min-width: 200px;
+  transition: border-color 0.15s;
+}
+
+.tk-table-search:focus-within { border-color: var(--tk-accent-glow); }
+
+.tk-table-search input {
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 12px;
+  color: var(--tk-text-primary);
+  width: 100%;
+  font-family: inherit;
+}
+
+.tk-table-search input::placeholder { color: var(--tk-text-muted); }
+
+/* Table wrapper — horizontal scroll when content exceeds container width */
+.tk-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* smooth momentum scroll on iOS */
+}
+
+/* Custom scrollbar — matches dark theme */
+.tk-table-wrap::-webkit-scrollbar {
+  height: 5px;
+}
+.tk-table-wrap::-webkit-scrollbar-track {
+  background: var(--tk-bg-surface);
+}
+.tk-table-wrap::-webkit-scrollbar-thumb {
+  background: var(--tk-border-strong);
+  border-radius: 99px;
+}
+.tk-table-wrap::-webkit-scrollbar-thumb:hover {
+  background: var(--tk-text-muted);
+}
+
+/* The table itself — natural column widths, scrolls rather than squishes */
+.tk-table {
+  min-width: 1100px;    /* forces scroll once viewport is narrower */
+  width: max-content;   /* table grows to fit its content */
+  border-collapse: collapse;
+  table-layout: auto;   /* browser calculates column widths from content */
+}
+
+.tk-table thead tr {
+  border-bottom: 0.5px solid var(--tk-border-default);
+}
+
+.tk-table th {
+  padding: 10px 18px;
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--tk-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: var(--tk-bg-raised);
+  text-align: left;
+  white-space: nowrap;  /* header labels never wrap — sets a natural min-width per column */
+}
+
+.tk-table tbody tr {
+  border-bottom: 0.5px solid var(--tk-border-subtle);
+  transition: background 0.1s;
+}
+
+.tk-table tbody tr:last-child { border-bottom: none; }
+.tk-table tbody tr:hover { background: var(--tk-bg-hover); }
+
+.tk-table td {
+  padding: 11px 18px;
+  font-size: 12.5px;
+  color: var(--tk-text-primary);
+  vertical-align: middle;
+  /* no overflow:hidden / text-overflow / white-space — content wraps naturally */
+}
+
+/* Two-line cell: primary + secondary */
+.td-primary { font-size: 12.5px; color: var(--tk-text-primary); }
+.td-sub     { font-size: 11px;   color: var(--tk-text-muted); margin-top: 1px; }
+
+/* Pagination */
+.tk-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  border-top: 0.5px solid var(--tk-border-subtle);
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.pg-info {
+  font-size: 12px;
+  color: var(--tk-text-muted);
+}
+
+.pg-info strong { color: var(--tk-text-secondary); }
+
+.pg-controls {
+  display: flex;
+  gap: 4px;
+}
+
+.pg-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--tk-radius-sm);
+  background: var(--tk-bg-raised);
+  border: 0.5px solid var(--tk-border-default);
+  color: var(--tk-text-secondary);
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  transition: all 0.12s;
+}
+
+.pg-btn:hover:not(:disabled) {
+  background: var(--tk-bg-overlay);
+  color: var(--tk-text-primary);
+}
+
+.pg-btn.active {
+  background: var(--tk-accent);
+  border-color: var(--tk-accent);
+  color: #fff;
+}
+
+.pg-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.pg-page-info {
+  font-size: 12px;
+  color: var(--tk-text-muted);
+}
+
+/* Empty state */
+.tk-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 20px;
+  gap: 10px;
+  color: var(--tk-text-muted);
+}
+
+.tk-empty-state i   { font-size: 28px; }
+.tk-empty-state svg { width: 28px; height: 28px; }
+.tk-empty-state p   { font-size: 12.5px; margin: 0; }
+
+/* Error row */
+.tk-table-error {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  color: var(--tk-red);
+  font-size: 12.5px;
+  border-top: 0.5px solid var(--tk-border-subtle);
+}
+
+
+/* ── 11. BADGES / PILLS ────────────────────────────────────── */
+.tk-pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: 10.5px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 5px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.tk-pill-blue   { background: var(--tk-accent-soft);  color: var(--tk-accent);  }
+.tk-pill-green  { background: var(--tk-green-soft);   color: var(--tk-green);   }
+.tk-pill-yellow { background: var(--tk-yellow-soft);  color: var(--tk-yellow);  }
+.tk-pill-red    { background: var(--tk-red-soft);     color: var(--tk-red);     }
+.tk-pill-purple { background: var(--tk-purple-soft);  color: var(--tk-purple);  }
+.tk-pill-cyan   { background: var(--tk-cyan-soft);    color: var(--tk-cyan);    }
+.tk-pill-orange { background: var(--tk-orange-soft);  color: var(--tk-orange);  }
+
+
+/* ── 12. FORMS ─────────────────────────────────────────────── */
+/*
+  Override Bootstrap form-control to use dark surfaces.
+  These apply everywhere form inputs appear — settings, modals, forms.
+*/
+.form-control,
+.form-select,
+.tk-input {
+  background-color: var(--tk-bg-raised) !important;
+  border: 0.5px solid var(--tk-border-default) !important;
+  border-radius: var(--tk-radius-md) !important;
+  color: var(--tk-text-primary) !important;
+  font-size: 13px;
+  padding: 8px 12px;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  font-family: inherit;
+}
+
+.form-control::placeholder,
+.form-select::placeholder { color: var(--tk-text-muted) !important; }
+
+.form-control:focus,
+.form-select:focus,
+.tk-input:focus {
+  background-color: var(--tk-bg-overlay) !important;
+  border-color: var(--tk-accent-glow) !important;
+  box-shadow: 0 0 0 3px rgba(79, 142, 247, 0.08) !important;
+  color: var(--tk-text-primary) !important;
+  outline: none;
+}
+
+.form-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--tk-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 5px;
+}
+
+/* Section dividers inside forms */
+.tk-form-section {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--tk-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 0.5px solid var(--tk-border-subtle);
+}
+
+/* ── FILE INPUT — dark theme override ──────────────────────── */
+/*
+  input[type="file"] needs the ::file-selector-button pseudo-element
+  styled separately — the regular form-control rules don't touch it.
+*/
+input[type="file"].form-control,
+input[type="file"].tk-input {
+  padding: 0 !important;          /* remove default padding — button fills left side */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* The native "Choose File" button */
+input[type="file"].form-control::file-selector-button,
+input[type="file"].tk-input::file-selector-button {
+  height: 100%;
+  padding: 0 14px;
+  margin: 0;
+  background: var(--tk-bg-overlay);
+  border: none;
+  border-right: 0.5px solid var(--tk-border-default);
+  color: var(--tk-text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+input[type="file"].form-control::file-selector-button:hover,
+input[type="file"].tk-input::file-selector-button:hover {
+  background: var(--tk-bg-hover);
+  color: var(--tk-text-primary);
+}
+
+/* The "no file chosen" text area */
+input[type="file"].form-control,
+input[type="file"].tk-input {
+  color: var(--tk-text-muted) !important;
+  font-size: 12px;
+}
+
+/* When a file IS selected, text becomes primary */
+input[type="file"].form-control:not(:placeholder-shown),
+input[type="file"].tk-input:not(:placeholder-shown) {
+  color: var(--tk-text-primary) !important;
+}
+
+/* ── CUSTOM FILE UPLOAD ZONE (tk-file-zone) ────────────────── */
+/*
+  Drop-zone style alternative — use <label class="tk-file-zone">
+  wrapping a hidden <input type="file">.
+  Looks like a dashed upload area rather than a button.
+*/
+.tk-file-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  min-height: 88px;
+  padding: 16px;
+  border: 1px dashed var(--tk-border-default);
+  border-radius: var(--tk-radius-md);
+  background: var(--tk-bg-raised);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+  text-align: center;
+}
+
+.tk-file-zone:hover,
+.tk-file-zone.dragover {
+  border-color: var(--tk-accent-glow);
+  background: var(--tk-accent-soft);
+}
+
+.tk-file-zone input[type="file"] {
+  display: none;
+}
+
+.tk-file-zone-icon {
+  font-size: 22px;
+  color: var(--tk-text-muted);
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.tk-file-zone:hover .tk-file-zone-icon {
+  color: var(--tk-accent);
+}
+
+.tk-file-zone-text {
+  font-size: 12px;
+  color: var(--tk-text-secondary);
+  line-height: 1.4;
+}
+
+.tk-file-zone-text span {
+  color: var(--tk-accent);
+  font-weight: 500;
+}
+
+.tk-file-zone-sub {
+  font-size: 10.5px;
+  color: var(--tk-text-muted);
+}
+
+/* Preview thumbnail shown after file selection */
+.tk-file-preview {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: var(--tk-bg-raised);
+  border: 0.5px solid var(--tk-border-default);
+  border-radius: var(--tk-radius-md);
+  margin-top: 8px;
+}
+
+.tk-file-preview img {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: var(--tk-radius-sm);
+  border: 0.5px solid var(--tk-border-default);
+  flex-shrink: 0;
+}
+
+.tk-file-preview-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.tk-file-preview-name {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--tk-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.tk-file-preview-size {
+  font-size: 10.5px;
+  color: var(--tk-text-muted);
+  margin-top: 2px;
+}
+
+.tk-file-preview-remove {
+  background: none;
+  border: none;
+  color: var(--tk-text-muted);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: var(--tk-radius-sm);
+  transition: color 0.12s, background 0.12s;
+  flex-shrink: 0;
+}
+
+.tk-file-preview-remove:hover {
+  color: var(--tk-red);
+  background: var(--tk-red-soft);
+}
+
+
+/* ── 13. MODALS ────────────────────────────────────────────── */
+/*
+  Override Bootstrap modal to stay in the dark theme.
+  The white-modal-on-dark-page was the biggest jarring issue.
+*/
+.modal-content {
+  background: var(--tk-bg-overlay) !important;
+  border: 0.5px solid var(--tk-border-default) !important;
+  border-radius: var(--tk-radius-xl) !important;
+  color: var(--tk-text-primary) !important;
+}
+
+.modal-header {
+  background: var(--tk-bg-overlay);
+  border-bottom: 0.5px solid var(--tk-border-subtle) !important;
+  padding: 14px 20px;
+}
+
+.modal-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--tk-text-primary);
+}
+
+.modal-footer {
+  background: var(--tk-bg-overlay);
+  border-top: 0.5px solid var(--tk-border-subtle) !important;
+  padding: 12px 20px;
+}
+
+.modal-body { padding: 18px 20px; }
+
+.btn-close {
+  filter: invert(1) opacity(0.5);
+}
+
+.btn-close:hover { filter: invert(1) opacity(0.85); }
+
+/* Backdrop */
+.modal-backdrop { background: rgba(0, 0, 0, 0.7) !important; }
+
+
+/* ── 14. LOADER ────────────────────────────────────────────── */
+.loader-container {
+  position: relative;
+  width: 100%;
+}
+
+.loader-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 12, 20, 0.7);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  border-radius: var(--tk-radius-lg);
+}
+
+/* Override Bootstrap spinner color to use our accent */
+.loader-overlay .spinner-border {
+  color: var(--tk-accent) !important;
+  width: 2rem;
+  height: 2rem;
+  border-width: 2.5px;
+}
+
+.content-under-overlay {
+  opacity: 0.4;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Inline spinner for table loading row */
+@keyframes tk-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.tk-spin { animation: tk-spin 0.8s linear infinite; display: inline-block; }
+
+
+/* ── 15. SETTINGS PAGE ─────────────────────────────────────── */
+.tk-settings-sidebar {
+  background: var(--tk-bg-surface);
+  border: 0.5px solid var(--tk-border-subtle);
+  border-radius: var(--tk-radius-lg);
+  overflow: hidden;
+  width: 180px;
+  flex-shrink: 0;
+}
+
+.tk-settings-nav-item {
+  padding: 9px 14px;
+  font-size: 12.5px;
+  color: var(--tk-text-secondary);
+  cursor: pointer;
+  border-left: 2px solid transparent;
+  transition: all 0.12s;
+}
+
+.tk-settings-nav-item:hover {
+  color: var(--tk-text-primary);
+  background: var(--tk-bg-raised);
+}
+
+.tk-settings-nav-item.active {
+  color: var(--tk-accent);
+  background: var(--tk-accent-soft);
+  border-left-color: var(--tk-accent);
+  font-weight: 500;
+}
+
+/* Theme selector cards */
+.tk-theme-option {
+  flex: 1;
+  background: var(--tk-bg-raised);
+  border: 0.5px solid var(--tk-border-default);
+  border-radius: var(--tk-radius-md);
+  padding: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.15s;
+}
+
+.tk-theme-option:hover {
+  border-color: var(--tk-border-strong);
+}
+
+.tk-theme-option.active {
+  background: var(--tk-accent-soft);
+  border-color: rgba(79, 142, 247, 0.35);
+}
+
+.tk-theme-option .radio-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid var(--tk-border-default);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tk-theme-option.active .radio-dot {
+  background: var(--tk-accent);
+  border-color: var(--tk-accent);
+}
+
+.tk-theme-option.active .radio-dot::after {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.tk-theme-option span {
+  font-size: 12px;
+  color: var(--tk-text-secondary);
+}
+
+.tk-theme-option.active span {
+  color: var(--tk-accent);
+  font-weight: 500;
+}
+
+
+/* ── 16. UTILITY / BOOTSTRAP OVERRIDES ────────────────────── */
+
+/* Make Bootstrap text-danger use our red token */
+.text-danger { color: var(--tk-red) !important; }
+.text-success { color: var(--tk-green) !important; }
+.text-warning { color: var(--tk-yellow) !important; }
+.text-info    { color: var(--tk-cyan) !important; }
+.text-primary { color: var(--tk-accent) !important; }
+.text-muted   { color: var(--tk-text-muted) !important; }
+
+/* Override Bootstrap's .btn to not fight our custom buttons */
+.btn.tk-btn { border: 0.5px solid transparent; }
+
+@font-face {
+  font-family: 'unicons';
+  font-display: swap;        /* ← This is the fix. Block/auto can make icons invisible. */
+  /* src is intentionally omitted here — the CDN link tag above handles it.
+     If icons still don't show, check your <link> tag is loading before app.css */
+}
+ 
+/* Safety net: make sure uil icons are always inline-flex so they align in buttons */
+[class^="uil-"],
+[class*=" uil-"] {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+  vertical-align: middle;
+  /* Explicit font-family in case another rule is overriding it */
+  font-family: 'unicons' !important;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  speak: never;
+  -webkit-font-smoothing: antialiased;
+}
+ 
+/* Ensure icons inside .tk-btn don't shrink or break layout */
+.tk-btn [class^="uil-"],
+.tk-btn [class*=" uil-"] {
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+/* Lucide React SVG icons inside buttons */
+.tk-btn svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  stroke-width: 1.75;
+}
+.tk-btn-sm svg {
+  width: 13px;
+  height: 13px;
+}
+.tk-btn-lg svg {
+  width: 16px;
+  height: 16px;
+}
+ 
+ 
+/* ── SECTION 3: Form page utility classes ──────────────────
+   Extracted from LeadsForm.jsx inline styles
+   ─────────────────────────────────────────────────────────── */
+ 
+/* Required field asterisk */
+.tk-required {
+  color: var(--tk-red);
+}
+ 
+/* Validation error message below a field */
+.tk-field-error {
+  color: var(--tk-red);
+  font-size: 11px;
+  margin-top: 3px;
+  display: block;
+}
+ 
+/* Form section heading: label + divider */
+.tk-form-section-heading {
+  margin-top: 20px;
+  margin-bottom: 16px;
+}
+ 
+.tk-form-section-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--tk-text-muted);
+  margin-bottom: 10px;
+}
+ 
+.tk-form-section-divider {
+  height: 0.5px;
+  background: var(--tk-border-subtle);
+}
+ 
+/* Form action bar (Save / Cancel buttons row) */
+.tk-form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 0.5px solid var(--tk-border-subtle);
+}
+ 
+/* "Converted to Deal" pill in page title */
+.tk-pill-title {
+  margin-left: 10px;
+  font-size: 12px;
+  gap: 4px;
+}
+ 
+/* General alert banners (error / warning) */
+.tk-alert {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: var(--tk-radius-md);
+  padding: 10px 14px;
+  font-size: 13px;
+  margin-bottom: 14px;
+}
+ 
+.tk-alert i {
+  font-size: 15px;
+  flex-shrink: 0;
+}
+ 
+.tk-alert-error {
+  background: var(--tk-red-soft);
+  border: 0.5px solid var(--tk-red-glow);
+  color: var(--tk-red);
+}
+ 
+.tk-alert-warning {
+  background: var(--tk-yellow-soft);
+  border: 0.5px solid var(--tk-yellow-glow);
+  color: var(--tk-yellow);
+}
+ 
+.tk-alert-dismissible {
+  position: relative;
+}
+ 
+/* Retry button inside warning banner */
+.tk-alert-retry-btn {
+  margin-left: auto;
+  background: none;
+  border: 0.5px solid var(--tk-yellow-glow);
+  border-radius: var(--tk-radius-sm);
+  padding: 2px 8px;
+  cursor: pointer;
+  color: var(--tk-yellow);
+  font-size: 11px;
+  font-family: inherit;
+  flex-shrink: 0;
+}
+ 
+.tk-alert-retry-btn:hover {
+  background: var(--tk-yellow-soft);
+}
+ 
+ 
+/* ── SECTION 4: Table / List utility classes ───────────────
+   Extracted from LeadsList.jsx and SalesDashboard.jsx inline styles
+   ─────────────────────────────────────────────────────────── */
+ 
+/* Bold lead name in table rows */
+.tk-lead-name {
+  font-weight: 500;
+  color: var(--tk-text-primary);
+}
+ 
+/* Muted pill variant for email / phone in table */
+.tk-pill-muted {
+  background: var(--tk-bg-overlay);
+  color: var(--tk-text-secondary);
+  font-size: 11px;
+}
+ 
+/* Row action buttons (view / edit icons) */
+.tk-row-actions {
+  display: flex;
+  gap: 5px;
+  flex-wrap: nowrap;    /* never stack buttons vertically */
+  align-items: center;
+  white-space: nowrap;  /* prevent icon labels from wrapping */
+}
+ 
+/* Danger-tinted ghost button (e.g. Clear Filter) */
+.tk-btn-ghost.tk-btn-danger {
+  color: var(--tk-red);
+  border-color: var(--tk-red-glow);
+}
+ 
+.tk-btn-ghost.tk-btn-danger:hover {
+  background: var(--tk-red-soft);
+  border-color: var(--tk-red);
+}
+ 
+ 
+/* ── SECTION 5: Dashboard skeleton ────────────────────────
+   Extracted from SalesDashboard.jsx inline skeleton style
+   ─────────────────────────────────────────────────────────── */
+ 
+/* Skeleton shimmer block (used while metrics are loading) */
+.tk-skeleton {
+  display: inline-block;
+  width: 48px;
+  height: 28px;
+  background: var(--tk-border-default);
+  border-radius: var(--tk-radius-sm);
+  animation: tk-pulse 1.4s ease-in-out infinite;
+}
+ 
+/* Stat bar transition — the width is set dynamically via JS,
+   but the transition lives here in CSS */
+.tk-stat-bar-fill {
+  transition: width 0.8s ease;
+}
+ 
+ 
+/* ── SECTION 6: Small typography helpers ───────────────────
+   Used across multiple pages
+   ─────────────────────────────────────────────────────────── */
+ 
+.tk-text-secondary { color: var(--tk-text-secondary); }
+.tk-text-sm        { font-size: 12px; }
+
+@font-face {
+  font-family: 'unicons';
+  font-display: swap; /* Prevents icons from being invisible during font load */
+}
+ 
+[class^="uil-"],
+[class*=" uil-"] {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+  vertical-align: middle;
+  font-family: 'unicons' !important;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  speak: never;
+  -webkit-font-smoothing: antialiased;
+}
+ 
+/* Icons inside buttons: consistent size, never shrink */
+.tk-btn [class^="uil-"],
+.tk-btn [class*=" uil-"] {
+  font-size: 14px;
+  flex-shrink: 0;
+}
+ 
+ 
+/* ════════════════════════════════════════════════════════════
+   C. BOOTSTRAP 5 COMPATIBILITY SHIMS
+   Bootstrap 5 removed .mr-1/.ml-1 in favour of .me-1/.ms-1.
+   These shims let the old classes keep working without a
+   find-replace across every JSX file.
+   ════════════════════════════════════════════════════════════ */
+.mr-1 { margin-right: 4px  !important; }
+.mr-2 { margin-right: 8px  !important; }
+.ml-1 { margin-left:  4px  !important; }
+.ml-2 { margin-left:  8px  !important; }
+ 
+ 
+/* ════════════════════════════════════════════════════════════
+   D. FORM UTILITIES  (shared: ContactsForm, LeadsForm, etc.)
+   ════════════════════════════════════════════════════════════ */
+ 
+/* Required asterisk */
+.tk-required { color: var(--tk-red); }
+ 
+/* Per-field validation error */
+.tk-field-error {
+  color: var(--tk-red);
+  font-size: 11px;
+  margin-top: 3px;
+  display: block;
+}
+ 
+/* Section heading inside a form (label + hairline divider) */
+.tk-form-section-heading  { margin-top: 20px; margin-bottom: 16px; }
+.tk-form-section-label    {
+  display: block;
+  font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--tk-text-muted);
+  margin-bottom: 10px;
+}
+.tk-form-section-divider  { height: 0.5px; background: var(--tk-border-subtle); }
+ 
+/* Action row (Save / Cancel) */
+.tk-form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 0.5px solid var(--tk-border-subtle);
+}
+ 
+/* Generic alert banners */
+.tk-alert {
+  display: flex; align-items: center; gap: 8px;
+  border-radius: var(--tk-radius-md);
+  padding: 10px 14px; font-size: 13px; margin-bottom: 14px;
+}
+.tk-alert i { font-size: 15px; flex-shrink: 0; }
+.tk-alert-error   { background: var(--tk-red-soft);    border: 0.5px solid var(--tk-red-glow);    color: var(--tk-red);    }
+.tk-alert-warning { background: var(--tk-yellow-soft); border: 0.5px solid var(--tk-yellow-glow); color: var(--tk-yellow); }
+.tk-alert-info    { background: var(--tk-accent-soft); border: 0.5px solid var(--tk-accent-glow); color: var(--tk-accent); }
+.tk-alert-success { background: var(--tk-green-soft);  border: 0.5px solid var(--tk-green-glow);  color: var(--tk-green);  }
+ 
+.tk-alert-retry-btn {
+  margin-left: auto; background: none;
+  border: 0.5px solid var(--tk-yellow-glow);
+  border-radius: var(--tk-radius-sm);
+  padding: 2px 8px; cursor: pointer;
+  color: var(--tk-yellow); font-size: 11px; font-family: inherit;
+}
+.tk-alert-retry-btn:hover { background: var(--tk-yellow-soft); }
+ 
+/* Danger tint on ghost button (e.g. "Clear Filter") */
+.tk-btn-ghost.tk-btn-danger {
+  color: var(--tk-red);
+  border-color: var(--tk-red-glow);
+}
+.tk-btn-ghost.tk-btn-danger:hover {
+  background: var(--tk-red-soft);
+  border-color: var(--tk-red);
+}
+ 
+/* Close-Lost / confirm red button */
+.tk-btn-close-lost {
+  background: var(--tk-red);
+  color: #fff;
+  border: none;
+  padding: 9px 20px;
+  border-radius: var(--tk-radius-md);
+  font-weight: 600;
+  cursor: pointer;
+}
+.tk-btn-close-lost:hover  { opacity: 0.88; }
+.tk-btn-close-lost:disabled { opacity: 0.5; cursor: not-allowed; }
+ 
+/* Close-Won confirm green button */
+.tk-btn-close-won {
+  background: var(--tk-green);
+  color: #fff;
+  border: none;
+  padding: 10px 22px;
+  border-radius: var(--tk-radius-md);
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 8px;
+}
+.tk-btn-close-won:hover    { opacity: 0.88; }
+.tk-btn-close-won:disabled { opacity: 0.5; cursor: not-allowed; }
+ 
+/* Skeleton shimmer */
+.tk-skeleton {
+  display: inline-block; width: 48px; height: 28px;
+  background: var(--tk-border-default);
+  border-radius: var(--tk-radius-sm);
+  animation: tk-pulse 1.4s ease-in-out infinite;
+}
+ 
+ 
+/* ════════════════════════════════════════════════════════════
+   E. CONTACTS — record count in page subtitle
+   ════════════════════════════════════════════════════════════ */
+.tk-record-count {
+  margin-left: 8px;
+  color: var(--tk-accent);
+  font-weight: 600;
+}
+ 
+/* Two-line cell used in contacts/deals tables */
+.tk-cell-primary { font-weight: 500; color: var(--tk-text-primary); font-size: 13px; }
+.tk-cell-sub     { color: var(--tk-text-muted); font-size: 11px; }
+/* block + ellipsis so long emails/phones truncate inside fixed-width td */
+.tk-cell-mono  {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  font-size: 12px;
+  color: var(--tk-text-secondary);
+  font-family: monospace;
+}
+.tk-cell-muted {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  font-size: 12px;
+  color: var(--tk-text-secondary);
+}
+ 
+/* Muted pill variant (phone, email tags) */
+.tk-pill-muted {
+  background: var(--tk-bg-overlay);
+  color: var(--tk-text-secondary);
+  font-size: 11px;
+}
+ 
+ 
+/* ════════════════════════════════════════════════════════════
+   F. DEAL ACTION FORMS
+   ════════════════════════════════════════════════════════════ */
+ 
+/* Vertical stack of form fields inside a deal action */
+.tk-form-stack { display: flex; flex-direction: column; gap: 14px; }
+ 
+/* Info row: label (left) + bold value (right) */
+.tk-info-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 7px 12px;
+  background: var(--tk-bg-raised);
+  border: 0.5px solid var(--tk-border-subtle);
+  border-radius: var(--tk-radius-md);
+  font-size: 13px;
+}
+.tk-info-row-label { color: var(--tk-text-muted); }
+.tk-info-row-value { font-weight: 600; color: var(--tk-text-primary); }
+ 
+/* Amount diff hint below negotiation input */
+.tk-amount-diff         { font-size: 11px; margin-top: 4px; display: block; }
+.tk-amount-diff.positive { color: var(--tk-green); }
+.tk-amount-diff.negative { color: var(--tk-red); }
+.tk-amount-diff.neutral  { color: var(--tk-text-muted); }
+ 
+/* Close-Lost warning box */
+.tk-deal-lost-warning {
+  background: var(--tk-red-soft);
+  border: 0.5px solid var(--tk-red-glow);
+  border-radius: var(--tk-radius-md);
+  padding: 12px 14px;
+  font-size: 13px; color: var(--tk-red);
+  display: flex; gap: 8px; align-items: flex-start;
+}
+.tk-deal-lost-warning i { margin-top: 1px; }
+ 
+/* Close-Won celebration box */
+.tk-deal-won-box {
+  background: var(--tk-green-soft);
+  border: 0.5px solid var(--tk-green-glow);
+  border-radius: var(--tk-radius-md);
+  padding: 14px 16px;
+  text-align: center;
+}
+.tk-deal-won-icon  { font-size: 28px; color: var(--tk-green); display: block; margin-bottom: 8px; }
+.tk-deal-won-title { font-size: 14px; font-weight: 600; color: var(--tk-green); margin-bottom: 4px; }
+.tk-deal-won-sub   { font-size: 13px; color: var(--tk-text-muted); margin: 0; }
+ 
+/* Closed terminal state card (pipeline page) */
+.tk-deal-terminal {
+  border-radius: var(--tk-radius-lg);
+  padding: 20px;
+  text-align: center;
+}
+.tk-deal-terminal.won  { background: var(--tk-green-soft); border: 0.5px solid var(--tk-green-glow); }
+.tk-deal-terminal.lost { background: var(--tk-red-soft);   border: 0.5px solid var(--tk-red-glow);   }
+.tk-deal-terminal i    { font-size: 28px; display: block; margin-bottom: 8px; }
+.tk-deal-terminal.won  i { color: var(--tk-green); }
+.tk-deal-terminal.lost i { color: var(--tk-red);   }
+.tk-deal-terminal-title  { font-size: 15px; font-weight: 600; }
+.tk-deal-terminal.won  .tk-deal-terminal-title { color: var(--tk-green); }
+.tk-deal-terminal.lost .tk-deal-terminal-title { color: var(--tk-red);   }
+ 
+/* Inline form description hint text */
+.tk-form-hint { font-size: 12px; color: var(--tk-text-muted); margin-bottom: 4px; }
+ 
+ 
+/* ════════════════════════════════════════════════════════════
+   G. DEAL HISTORY MODAL / TIMELINE
+   ════════════════════════════════════════════════════════════ */
+ 
+/* Full-screen backdrop */
+.tk-modal-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(0, 0, 0, 0.70);
+  z-index: 1050;
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+}
+ 
+/* Modal shell */
+.tk-modal {
+  width: 100%; max-width: 720px; max-height: 85vh;
+  display: flex; flex-direction: column;
+  background: var(--tk-bg-overlay);
+  border: 0.5px solid var(--tk-border-default);
+  border-radius: var(--tk-radius-xl);
+  overflow: hidden;
+}
+ 
+/* Modal header */
+.tk-modal-header {
+  padding: 16px 22px;
+  border-bottom: 0.5px solid var(--tk-border-subtle);
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--tk-bg-raised);
+  flex-shrink: 0;
+}
+.tk-modal-title    { font-size: 15px; font-weight: 600; color: var(--tk-text-primary); }
+.tk-modal-subtitle { font-size: 12px; color: var(--tk-text-muted); margin-top: 2px; }
+ 
+/* Modal body */
+.tk-modal-body {
+  flex: 1; overflow-y: auto;
+  padding: 20px 22px;
+}
+ 
+/* Modal footer */
+.tk-modal-footer {
+  padding: 12px 22px;
+  border-top: 0.5px solid var(--tk-border-subtle);
+  background: var(--tk-bg-raised);
+  flex-shrink: 0;
+  display: flex; justify-content: flex-end;
+}
+ 
+/* Timeline container */
+.tk-timeline { display: flex; flex-direction: column; gap: 0; }
+ 
+/* Each timeline row = dot column + content card */
+.tk-timeline-row { display: flex; gap: 16px; }
+ 
+/* Left column: circle dot + vertical line */
+.tk-timeline-spine {
+  display: flex; flex-direction: column; align-items: center;
+  flex-shrink: 0; width: 36px;
+}
+.tk-timeline-dot {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--tk-accent-soft);
+  border: 0.5px solid var(--tk-accent-glow);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; font-weight: 700; color: var(--tk-accent);
+  flex-shrink: 0;
+}
+.tk-timeline-line {
+  width: 1px; flex: 1;
+  background: var(--tk-border-subtle);
+  min-height: 20px; margin: 4px 0;
+}
+ 
+/* Right column: content card */
+.tk-timeline-card {
+  flex: 1;
+  background: var(--tk-bg-raised);
+  border: 0.5px solid var(--tk-border-subtle);
+  border-radius: var(--tk-radius-lg);
+  padding: 14px 16px;
+  margin-bottom: 16px;
+}
+.tk-timeline-card-header {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.tk-timeline-card-header-left { display: flex; align-items: center; gap: 8px; }
+.tk-timeline-stage-name  { font-size: 13px; font-weight: 600; color: var(--tk-text-primary); }
+.tk-timeline-code-pill   { font-size: 10px; } /* uses existing tk-pill tk-pill-* */
+.tk-timeline-date        { font-size: 11px; color: var(--tk-text-muted); }
+ 
+/* Stage detail rows inside timeline card */
+.tk-stage-details       { display: flex; flex-direction: column; gap: 6px; }
+.tk-stage-detail-row    { display: flex; gap: 8px; font-size: 12.5px; }
+.tk-stage-detail-label  { color: var(--tk-text-muted); min-width: 140px; }
+.tk-stage-detail-value  { color: var(--tk-text-primary); font-weight: 500; }
+ 
+/* No data fallback */
+.tk-timeline-empty { font-size: 12px; color: var(--tk-text-muted); margin: 0; }
+
+
+/* ════════════════════════════════════════════════════════════
+   G2. DEAL HISTORY MODAL — redesigned (dhm-*)
+   ════════════════════════════════════════════════════════════ */
+
+/* Wider modal variant */
+.dhm-modal {
+  max-width: 860px;
+}
+
+/* ── Header ─────────────────────────────────────────────── */
+.dhm-header { gap: 12px; }
+
+.dhm-header-left {
+  display: flex; align-items: center; gap: 12px;
+}
+
+.dhm-header-icon {
+  width: 40px; height: 40px; border-radius: var(--tk-radius-lg);
+  background: var(--tk-accent-soft);
+  border: 0.5px solid var(--tk-accent-glow);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; color: var(--tk-accent);
+  flex-shrink: 0;
+}
+.dhm-header-icon.won  { background: var(--tk-green-soft);  border-color: var(--tk-green-glow);  color: var(--tk-green);  }
+.dhm-header-icon.lost { background: var(--tk-red-soft);    border-color: var(--tk-red-glow);    color: var(--tk-red);    }
+
+.dhm-header-company { color: var(--tk-text-muted); font-size: 11px; }
+
+.dhm-close-btn {
+  width: 32px; height: 32px; border-radius: var(--tk-radius-md);
+  background: transparent; border: none; cursor: pointer;
+  color: var(--tk-text-muted); font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+.dhm-close-btn:hover { background: var(--tk-bg-hover); color: var(--tk-text-primary); }
+
+/* ── Stats bar ──────────────────────────────────────────── */
+.dhm-stats-bar {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  padding: 12px 22px;
+  background: var(--tk-bg-raised);
+  border-bottom: 0.5px solid var(--tk-border-subtle);
+}
+
+.dhm-stat-chip {
+  display: flex; align-items: center; gap: 9px;
+  padding: 8px 14px;
+  background: var(--tk-bg-overlay);
+  border: 0.5px solid var(--tk-border-default);
+  border-radius: var(--tk-radius-lg);
+  min-width: 120px;
+}
+.dhm-stat-chip.accent {
+  background: var(--tk-accent-soft);
+  border-color: var(--tk-accent-glow);
+}
+.dhm-stat-chip-icon {
+  font-size: 16px; color: var(--tk-text-muted);
+}
+.dhm-stat-chip.accent .dhm-stat-chip-icon { color: var(--tk-accent); }
+.dhm-stat-chip-value {
+  font-size: 13px; font-weight: 600; color: var(--tk-text-primary);
+  line-height: 1.3;
+}
+.dhm-stat-chip-label {
+  font-size: 10px; color: var(--tk-text-muted); margin-top: 1px;
+}
+
+/* ── Pipeline progress bar ──────────────────────────────── */
+.dhm-progress-wrap {
+  padding: 12px 22px;
+  background: var(--tk-bg-raised);
+  border-bottom: 0.5px solid var(--tk-border-subtle);
+}
+
+.dhm-progress-bar {
+  display: flex; align-items: center;
+}
+
+.dhm-progress-step {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  flex-shrink: 0;
+}
+
+.dhm-progress-dot {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--tk-bg-overlay);
+  border: 0.5px solid var(--tk-border-default);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; color: var(--tk-text-muted);
+  transition: all 0.2s;
+}
+
+.dhm-progress-step.done .dhm-progress-dot {
+  background: var(--tk-green-soft);
+  border-color: var(--tk-green-glow);
+  color: var(--tk-green);
+}
+.dhm-progress-step.active .dhm-progress-dot {
+  background: var(--tk-accent-soft);
+  border-color: var(--tk-accent-glow);
+  color: var(--tk-accent);
+  box-shadow: 0 0 0 3px var(--tk-accent-soft);
+}
+.dhm-progress-step.lost .dhm-progress-dot {
+  background: var(--tk-red-soft);
+  border-color: var(--tk-red-glow);
+  color: var(--tk-red);
+}
+
+.dhm-progress-label {
+  font-size: 9px; font-weight: 600;
+  color: var(--tk-text-muted); letter-spacing: 0.03em;
+}
+.dhm-progress-step.done .dhm-progress-label  { color: var(--tk-green);  }
+.dhm-progress-step.active .dhm-progress-label { color: var(--tk-accent); }
+.dhm-progress-step.lost .dhm-progress-label  { color: var(--tk-red);    }
+
+.dhm-progress-connector {
+  flex: 1; height: 1px;
+  background: var(--tk-border-subtle);
+  margin: 0 2px;
+  margin-bottom: 14px; /* align with dot centre */
+}
+.dhm-progress-connector.filled { background: var(--tk-green-glow); }
+
+/* ── Tabs ───────────────────────────────────────────────── */
+.dhm-tabs {
+  display: flex; gap: 2px;
+  padding: 0 22px;
+  border-bottom: 0.5px solid var(--tk-border-subtle);
+  background: var(--tk-bg-raised);
+  flex-shrink: 0;
+}
+
+.dhm-tab {
+  display: flex; align-items: center; gap: 6px;
+  padding: 11px 16px;
+  font-size: 12.5px; font-weight: 500;
+  color: var(--tk-text-muted);
+  background: transparent; border: none; cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -0.5px;
+  transition: color 0.15s, border-color 0.15s;
+}
+.dhm-tab:hover { color: var(--tk-text-secondary); }
+.dhm-tab.active {
+  color: var(--tk-accent);
+  border-bottom-color: var(--tk-accent);
+}
+.dhm-tab .uil { font-size: 14px; }
+
+.dhm-tab-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 18px; height: 18px; padding: 0 5px;
+  border-radius: 10px;
+  background: var(--tk-accent-soft);
+  color: var(--tk-accent);
+  font-size: 10px; font-weight: 700;
+}
+
+/* ── Body ───────────────────────────────────────────────── */
+.dhm-body { min-height: 240px; }
+
+.dhm-loading {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 12px;
+  padding: 48px 0;
+}
+.dhm-loading-text { font-size: 12px; color: var(--tk-text-muted); }
+
+.dhm-alert {
+  display: flex; align-items: flex-start; gap: 12px;
+  border-radius: var(--tk-radius-lg); padding: 14px 16px;
+}
+
+.dhm-empty {
+  padding: 48px 0;
+}
+
+/* ── Timeline ───────────────────────────────────────────── */
+.dhm-timeline-wrap { }
+
+.dhm-timeline-hint {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 11px; color: var(--tk-text-muted);
+  margin-bottom: 16px;
+}
+
+.dhm-timeline { display: flex; flex-direction: column; }
+
+.dhm-tl-row { display: flex; gap: 14px; }
+
+/* Spine */
+.dhm-tl-spine {
+  display: flex; flex-direction: column; align-items: center;
+  flex-shrink: 0; width: 38px;
+}
+
+.dhm-tl-dot {
+  width: 38px; height: 38px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; flex-shrink: 0;
+  background: var(--tk-bg-overlay);
+  border: 0.5px solid var(--tk-border-default);
+  color: var(--tk-text-muted);
+}
+/* Colour variants */
+.dhm-tl-dot.dot-blue   { background: rgba(56,189,248,0.10);  border-color: rgba(56,189,248,0.25);  color: var(--tk-cyan);    }
+.dhm-tl-dot.dot-cyan   { background: rgba(56,189,248,0.10);  border-color: rgba(56,189,248,0.25);  color: var(--tk-cyan);    }
+.dhm-tl-dot.dot-yellow { background: var(--tk-yellow-soft);  border-color: var(--tk-yellow-glow);  color: var(--tk-yellow);  }
+.dhm-tl-dot.dot-purple { background: var(--tk-purple-soft);  border-color: rgba(137,87,229,0.25);  color: var(--tk-purple);  }
+.dhm-tl-dot.dot-orange { background: var(--tk-orange-soft);  border-color: rgba(240,136,62,0.25);  color: var(--tk-orange);  }
+.dhm-tl-dot.dot-green,
+.dhm-tl-dot.won        { background: var(--tk-green-soft);   border-color: var(--tk-green-glow);   color: var(--tk-green);   }
+.dhm-tl-dot.dot-red,
+.dhm-tl-dot.lost       { background: var(--tk-red-soft);     border-color: var(--tk-red-glow);     color: var(--tk-red);     }
+
+.dhm-tl-line {
+  width: 1px; flex: 1;
+  background: var(--tk-border-subtle);
+  min-height: 16px; margin: 4px 0;
+}
+
+/* Card */
+.dhm-tl-card {
+  flex: 1;
+  background: var(--tk-bg-raised);
+  border: 0.5px solid var(--tk-border-subtle);
+  border-radius: var(--tk-radius-lg);
+  margin-bottom: 14px;
+  overflow: hidden;
+  transition: border-color 0.15s;
+}
+.dhm-tl-card.current {
+  border-color: var(--tk-accent-glow);
+}
+.dhm-tl-card.won  { border-color: var(--tk-green-glow);  }
+.dhm-tl-card.lost { border-color: var(--tk-red-glow);    }
+
+.dhm-tl-card-hdr {
+  width: 100%; display: flex; align-items: center;
+  justify-content: space-between;
+  padding: 11px 14px;
+  background: transparent; border: none; cursor: pointer;
+  text-align: left; gap: 8px;
+}
+.dhm-tl-card-hdr:hover { background: var(--tk-bg-hover); }
+
+.dhm-tl-hdr-left  { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+.dhm-tl-hdr-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+
+.dhm-tl-stage-name { font-size: 13px; font-weight: 600; color: var(--tk-text-primary); }
+.dhm-tl-code-pill  { font-size: 10px !important; padding: 1px 6px !important; }
+
+.dhm-tl-current-badge {
+  font-size: 10px; font-weight: 600; padding: 2px 8px;
+  border-radius: 10px;
+  background: var(--tk-accent-soft); color: var(--tk-accent);
+  border: 0.5px solid var(--tk-accent-glow);
+}
+.dhm-tl-won-badge {
+  font-size: 10px; font-weight: 600; padding: 2px 8px;
+  border-radius: 10px;
+  background: var(--tk-green-soft); color: var(--tk-green);
+  border: 0.5px solid var(--tk-green-glow);
+}
+.dhm-tl-lost-badge {
+  font-size: 10px; font-weight: 600; padding: 2px 8px;
+  border-radius: 10px;
+  background: var(--tk-red-soft); color: var(--tk-red);
+  border: 0.5px solid var(--tk-red-glow);
+}
+
+.dhm-tl-date {
+  font-size: 11px; color: var(--tk-text-muted);
+  display: flex; align-items: center; gap: 4px;
+}
+
+.dhm-tl-dur {
+  font-size: 11px; font-weight: 600; padding: 2px 8px;
+  border-radius: 10px; white-space: nowrap;
+  display: flex; align-items: center; gap: 4px;
+}
+.dhm-tl-dur.dur-fast    { background: var(--tk-green-soft);  color: var(--tk-green);  }
+.dhm-tl-dur.dur-ok      { background: var(--tk-yellow-soft); color: var(--tk-yellow); }
+.dhm-tl-dur.dur-slow    { background: var(--tk-red-soft);    color: var(--tk-red);    }
+.dhm-tl-dur.dur-neutral { background: var(--tk-bg-overlay);  color: var(--tk-text-muted); }
+
+.dhm-tl-chevron { font-size: 16px; color: var(--tk-text-muted); }
+
+.dhm-tl-body {
+  padding: 0 14px 14px;
+  border-top: 0.5px solid var(--tk-border-subtle);
+}
+
+.dhm-tl-submitter {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 0 10px;
+  font-size: 12px; color: var(--tk-text-muted);
+}
+.dhm-tl-submitter-avatar {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--tk-accent-soft);
+  border: 0.5px solid var(--tk-accent-glow);
+  color: var(--tk-accent);
+  font-size: 10px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Detail grid — two columns */
+.dhm-detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px 16px;
+  margin-top: 8px;
+}
+.dhm-detail-cell {
+  padding: 6px 10px;
+  background: var(--tk-bg-overlay);
+  border: 0.5px solid var(--tk-border-subtle);
+  border-radius: var(--tk-radius-md);
+}
+.dhm-detail-label {
+  font-size: 10.5px; color: var(--tk-text-muted);
+  margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.03em;
+}
+.dhm-detail-value {
+  font-size: 12.5px; font-weight: 500; color: var(--tk-text-primary);
+  word-break: break-word;
+}
+
+.dhm-no-data {
+  font-size: 12px; color: var(--tk-text-muted);
+  display: flex; align-items: center; gap: 5px;
+  padding: 8px 0; margin: 0;
+}
+
+/* inline doc link inside stage details */
+.tk-doc-inline-link {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 12px; font-weight: 500; color: var(--tk-accent);
+  text-decoration: none;
+}
+.tk-doc-inline-link:hover { opacity: 0.8; }
+
+/* small yes/no badges */
+.tk-badge-yes {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11.5px; font-weight: 600; color: var(--tk-green);
+}
+.tk-badge-no {
+  font-size: 11.5px; color: var(--tk-text-muted);
+}
+
+/* ── Financial Tab ──────────────────────────────────────── */
+.dhm-financial { display: flex; flex-direction: column; gap: 16px; }
+
+.dhm-fin-cards { display: flex; flex-direction: column; gap: 8px; }
+
+.dhm-fin-card {
+  padding: 14px 16px;
+  background: var(--tk-bg-raised);
+  border: 0.5px solid var(--tk-border-subtle);
+  border-radius: var(--tk-radius-lg);
+}
+.dhm-fin-card-top {
+  display: flex; align-items: center;
+  justify-content: space-between; gap: 12px;
+  margin-bottom: 10px;
+}
+.dhm-fin-card-label-wrap {
+  display: flex; align-items: center; gap: 10px;
+}
+.dhm-fin-stage-pill { font-size: 10px !important; padding: 1px 6px !important; }
+.dhm-fin-label { font-size: 13px; font-weight: 600; color: var(--tk-text-primary); }
+.dhm-fin-date  { font-size: 11px; color: var(--tk-text-muted); margin-top: 1px; }
+
+.dhm-fin-amount-wrap { display: flex; align-items: center; gap: 8px; }
+.dhm-fin-amount {
+  font-size: 15px; font-weight: 700; color: var(--tk-text-primary);
+}
+.dhm-fin-delta {
+  font-size: 11px; font-weight: 600; padding: 2px 7px;
+  border-radius: 10px; display: flex; align-items: center; gap: 2px;
+}
+.dhm-fin-delta.pos { background: var(--tk-green-soft);  color: var(--tk-green);  }
+.dhm-fin-delta.neg { background: var(--tk-red-soft);    color: var(--tk-red);    }
+
+.dhm-fin-bar-track {
+  height: 3px; border-radius: 2px;
+  background: var(--tk-border-subtle); overflow: hidden;
+}
+.dhm-fin-bar-fill {
+  height: 100%; border-radius: 2px;
+  background: var(--tk-accent);
+  transition: width 0.4s ease;
+}
+
+.dhm-fin-summary {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 14px; border-radius: var(--tk-radius-lg);
+  font-size: 12.5px;
+  background: var(--tk-bg-raised);
+  border: 0.5px solid var(--tk-border-subtle);
+  color: var(--tk-text-secondary);
+}
+.dhm-fin-summary.pos { background: var(--tk-green-soft);  border-color: var(--tk-green-glow);  color: var(--tk-green);  }
+.dhm-fin-summary.neg { background: var(--tk-red-soft);    border-color: var(--tk-red-glow);    color: var(--tk-red);    }
+.dhm-fin-summary .uil { font-size: 16px; }
+
+.dhm-fin-extras {
+  background: var(--tk-bg-raised);
+  border: 0.5px solid var(--tk-border-subtle);
+  border-radius: var(--tk-radius-lg);
+  overflow: hidden;
+}
+.dhm-fin-extras-title {
+  padding: 8px 14px;
+  font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.05em;
+  color: var(--tk-text-muted);
+  border-bottom: 0.5px solid var(--tk-border-subtle);
+  background: var(--tk-bg-overlay);
+}
+.dhm-fin-extra-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 9px 14px; font-size: 12.5px;
+  border-bottom: 0.5px solid var(--tk-border-subtle);
+}
+.dhm-fin-extra-row:last-child { border-bottom: none; }
+.dhm-fin-extra-label {
+  display: flex; align-items: center; gap: 8px;
+  color: var(--tk-text-secondary);
+}
+.dhm-fin-extra-value { font-weight: 600; color: var(--tk-text-primary); }
+
+/* ── Documents Tab ──────────────────────────────────────── */
+.dhm-doc-list { display: flex; flex-direction: column; gap: 10px; }
+
+.dhm-doc-card {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 16px;
+  background: var(--tk-bg-raised);
+  border: 0.5px solid var(--tk-border-subtle);
+  border-radius: var(--tk-radius-lg);
+  transition: border-color 0.15s;
+}
+.dhm-doc-card:hover { border-color: var(--tk-border-default); }
+
+.dhm-doc-icon {
+  width: 44px; height: 44px; border-radius: var(--tk-radius-md);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1px; flex-shrink: 0;
+  background: var(--tk-bg-overlay);
+  border: 0.5px solid var(--tk-border-default);
+}
+.dhm-doc-icon .uil { font-size: 18px; }
+.dhm-doc-ext { font-size: 8px; font-weight: 700; letter-spacing: 0.05em; }
+
+/* File type colour themes */
+.dhm-doc-icon.ext-pdf  { background: rgba(248,81,73,0.08);  border-color: rgba(248,81,73,0.2);  color: var(--tk-red);    }
+.dhm-doc-icon.ext-docx { background: rgba(56,189,248,0.08); border-color: rgba(56,189,248,0.2); color: var(--tk-cyan);   }
+.dhm-doc-icon.ext-xlsx { background: var(--tk-green-soft);  border-color: var(--tk-green-glow); color: var(--tk-green);  }
+.dhm-doc-icon.ext-img  { background: var(--tk-purple-soft); border-color: rgba(137,87,229,0.25);color: var(--tk-purple); }
+.dhm-doc-icon.ext-default { color: var(--tk-text-muted); }
+
+.dhm-doc-info { flex: 1; min-width: 0; }
+.dhm-doc-name {
+  font-size: 13px; font-weight: 600; color: var(--tk-text-primary);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.dhm-doc-meta {
+  display: flex; align-items: center; gap: 7px; margin-top: 4px;
+}
+.dhm-doc-stage-pill { font-size: 10px !important; padding: 1px 6px !important; }
+.dhm-doc-stage-name { font-size: 11.5px; color: var(--tk-text-muted); }
+
+.dhm-doc-download {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 14px; border-radius: var(--tk-radius-md);
+  font-size: 12px; font-weight: 500;
+  color: var(--tk-text-secondary); text-decoration: none;
+  background: var(--tk-bg-overlay);
+  border: 0.5px solid var(--tk-border-default);
+  flex-shrink: 0; transition: all 0.15s;
+}
+.dhm-doc-download:hover {
+  background: var(--tk-accent-soft);
+  border-color: var(--tk-accent-glow);
+  color: var(--tk-accent);
+}
+.dhm-doc-download .uil { font-size: 14px; }
+
+/* ── Footer ─────────────────────────────────────────────── */
+.dhm-footer {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.dhm-footer-meta { display: flex; align-items: center; gap: 6px; }
+.dhm-footer-info {
+  display: flex; align-items: center; gap: 5px;
+  font-size: 11.5px; color: var(--tk-text-muted);
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   H. DEAL PIPELINE — stage progress bar
+   ════════════════════════════════════════════════════════════ */
+.tk-stage-progress {
+  display: flex; gap: 4px; flex-wrap: wrap;
+  background: var(--tk-bg-raised);
+  border: 0.5px solid var(--tk-border-subtle);
+  border-radius: var(--tk-radius-lg);
+  padding: 12px 16px;
+  margin-bottom: 20px;
+}
+ 
+.tk-stage-pill {
+  display: flex; align-items: center; gap: 5px;
+  padding: 5px 12px; border-radius: 20px;
+  font-size: 11.5px; font-weight: 600;
+  border: 0.5px solid transparent;
+}
+.tk-stage-pill .stage-code { opacity: 0.6; font-weight: 400; }
+ 
+/* Colour variants for stage pills */
+.tk-stage-pill.done    { background: var(--tk-green-soft);   color: var(--tk-green);   border-color: var(--tk-green-glow);  }
+.tk-stage-pill.active  { background: var(--tk-accent-soft);  color: var(--tk-accent);  border-color: var(--tk-accent-glow); }
+.tk-stage-pill.future  { background: var(--tk-bg-overlay);   color: var(--tk-text-muted); border-color: var(--tk-border-subtle); }
+.tk-stage-pill.won     { background: var(--tk-green-soft);   color: var(--tk-green);   border-color: var(--tk-green-glow);  }
+.tk-stage-pill.lost    { background: var(--tk-red-soft);     color: var(--tk-red);     border-color: var(--tk-red-glow);    }
+.tk-stage-pill.unused  { background: var(--tk-bg-overlay);   color: var(--tk-text-muted); border-color: var(--tk-border-subtle); }
+ 
+ 
+/* ════════════════════════════════════════════════════════════
+   I. DEAL PIPELINE — summary + contact info rows
+   ════════════════════════════════════════════════════════════ */
+ 
+/* Key-value row inside summary card */
+.tk-kv-row {
+  display: flex; justify-content: space-between;
+  margin-bottom: 8px; font-size: 13px;
+}
+.tk-kv-label { color: var(--tk-text-muted); }
+.tk-kv-value { font-weight: 500; color: var(--tk-text-primary); }
+ 
+/* Contact info row (icon + text) */
+.tk-contact-row {
+  display: flex; align-items: center;
+  gap: 8px; font-size: 13px;
+  margin-bottom: 8px;
+}
+.tk-contact-row:last-child { margin-bottom: 0; }
+.tk-contact-row i  { color: var(--tk-text-muted); width: 16px; flex-shrink: 0; }
+.tk-contact-row span { color: var(--tk-text-secondary); }
+ 
+/* Skip / Close-Lost button row in pipeline card header */
+.tk-pipeline-card-actions { display: flex; gap: 7px; }
+ 
+ 
+/* ════════════════════════════════════════════════════════════
+   J. KANBAN / SCRUMBOARD
+   ════════════════════════════════════════════════════════════ */
+.tk-kanban-board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+ 
+/* Column wrapper */
+.tk-kanban-col {}
+ 
+/* Column header strip */
+.tk-kanban-col-header {
+  display: flex; justify-content: space-between; align-items: center;
+  border-radius: var(--tk-radius-md) var(--tk-radius-md) 0 0;
+  padding: 10px 14px;
+}
+.tk-kanban-col-title {
+  font-size: 12.5px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.tk-kanban-col-count {
+  border-radius: 20px;
+  padding: 1px 7px;
+  font-size: 10.5px; font-weight: 700;
+  background: rgba(255,255,255,0.12);
+  color: inherit;
+}
+ 
+/* Cards drop zone — scroll container */
+.tk-kanban-cards {
+  border-top: none;
+  border-radius: 0 0 var(--tk-radius-md) var(--tk-radius-md);
+  padding: 10px;
+  /* ~6 cards visible (each card ≈119px) before scroll kicks in */
+  max-height: 734px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--tk-bg-raised);
+  /* thin scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: var(--tk-border-default) transparent;
+}
+.tk-kanban-cards::-webkit-scrollbar        { width: 4px; }
+.tk-kanban-cards::-webkit-scrollbar-track  { background: transparent; }
+.tk-kanban-cards::-webkit-scrollbar-thumb  {
+  background: var(--tk-border-default);
+  border-radius: 4px;
+}
+.tk-kanban-cards::-webkit-scrollbar-thumb:hover { background: var(--tk-border-subtle); }
+
+/* ReactSortable inner container — must fill the full drop zone height
+   so the entire column body is a valid drop target, not just the cards */
+.tk-sortable-list {
+  min-height: 714px; /* 734px parent max-height − 10px padding top − 10px bottom */
+}
+ 
+/* Individual task card */
+.tk-kanban-card {
+  background: var(--tk-bg-surface);
+  border: 0.5px solid var(--tk-border-subtle);
+  border-radius: var(--tk-radius-md);
+  padding: 12px 13px;
+  margin-bottom: 8px;
+  cursor: grab;
+  transition: border-color 0.12s;
+}
+.tk-kanban-card:hover { border-color: var(--tk-border-default); }
+.tk-kanban-card:last-child { margin-bottom: 0; }
+ 
+/* Card inner layout */
+.tk-kanban-card-body { display: flex; align-items: flex-start; gap: 9px; }
+ 
+/* Initials avatar inside card */
+.tk-kanban-avatar {
+  width: 30px; height: 30px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10.5px; font-weight: 700; flex-shrink: 0;
+}
+ 
+.tk-kanban-card-info     { flex: 1; min-width: 0; }
+.tk-kanban-card-company  {
+  font-size: 12.5px; font-weight: 600; color: var(--tk-text-primary);
+  margin-bottom: 3px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.tk-kanban-card-meta     { font-size: 11px; color: var(--tk-text-muted); margin-bottom: 2px; }
+ 
+/* Card footer row */
+.tk-kanban-card-footer {
+  margin-top: 8px; padding-top: 7px;
+  border-top: 0.5px solid var(--tk-border-subtle);
+  display: flex; justify-content: flex-end;
+}
+ 
+/* Empty column placeholder */
+.tk-kanban-empty {
+  text-align: center; padding: 20px 0;
+  font-size: 12px; color: var(--tk-text-muted);
+}
+.tk-kanban-empty i { font-size: 20px; display: block; margin-bottom: 4px; }
+ 
+/* Sortable ghost card */
+.tk-drag-ghost { opacity: 0.4; background: var(--tk-accent-soft) !important; }
+ 
+/* Board loading spinner */
+.tk-board-loader {
+  display: flex; justify-content: center; padding: 40px;
+}
+.tk-board-spinner {
+  width: 28px; height: 28px;
+  border: 2.5px solid var(--tk-border-default);
+  border-top-color: var(--tk-accent);
+  border-radius: 50%;
+  animation: tk-spin 0.7s linear infinite;
+}
+ 
+ 
+/* Scrumboard wrapper (filter + board) */
+.tk-scrumboard-wrapper { display: flex; flex-direction: column; gap: 14px; }
+
+/* Filter bar */
+.tk-scrumboard-filter {
+  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+}
+
+/* Period pill tabs */
+.tk-scrumboard-period-tabs {
+  display: flex; align-items: center; gap: 4px;
+  background: var(--tk-bg-raised);
+  border: 0.5px solid var(--tk-border-subtle);
+  border-radius: var(--tk-radius-md);
+  padding: 4px;
+}
+.tk-period-tab {
+  padding: 4px 12px;
+  font-size: 12px; font-weight: 600;
+  border: none; cursor: pointer;
+  border-radius: calc(var(--tk-radius-md) - 2px);
+  background: transparent;
+  color: var(--tk-text-muted);
+  transition: background 0.12s, color 0.12s;
+}
+.tk-period-tab:hover  { background: var(--tk-bg-surface); color: var(--tk-text-primary); }
+.tk-period-tab.active { background: var(--tk-accent); color: #fff; }
+
+/* Custom date range row */
+.tk-scrumboard-custom-range {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.tk-form-group-inline {
+  display: flex; align-items: center; gap: 6px;
+}
+.tk-label-sm {
+  font-size: 11.5px; font-weight: 600; color: var(--tk-text-muted);
+  white-space: nowrap;
+}
+
+/* ════════════════════════════════════════════════════════════
+   K. LEAD PIPELINE — stage wizard + comments
+   ════════════════════════════════════════════════════════════ */
+ 
+/*
+  LeadsPipeline still uses Bootstrap card / nav — it needs
+  a light re-skin pass once you migrate it. Until then these
+  shims make it consistent with the dark theme.
+*/
+ 
+/* Comment card body area */
+.tk-comments-list { margin-top: 16px; }
+ 
+.tk-comment-item {
+  background: var(--tk-bg-raised);
+  border: 0.5px solid var(--tk-border-subtle);
+  border-radius: var(--tk-radius-md);
+  padding: 12px 14px;
+  margin-bottom: 10px;
+}
+.tk-comment-header {
+  display: flex; justify-content: space-between;
+  align-items: center; margin-bottom: 6px;
+}
+.tk-comment-author { font-size: 12.5px; font-weight: 600; color: var(--tk-text-primary); }
+.tk-comment-time   { font-size: 11px; color: var(--tk-text-muted); }
+.tk-comment-body   { font-size: 13px; color: var(--tk-text-secondary); }
+.tk-comment-stage-badge { margin-top: 8px; }
+ 
+/* Stage wizard nav (nav-pills override) */
+.nav-wizard-alt { display: flex; gap: 4px; flex-wrap: wrap; }
+ 
+.nav-wizard-alt .nav-link.leadpipeline {
+  font-size: 12px; font-weight: 500;
+  padding: 5px 14px; border-radius: 20px;
+  color: var(--tk-text-muted);
+  background: var(--tk-bg-overlay);
+  border: 0.5px solid var(--tk-border-subtle);
+  text-decoration: none; transition: all 0.12s;
+}
+.nav-wizard-alt .nav-link.leadpipeline.active {
+  background: var(--tk-accent-soft);
+  color: var(--tk-accent);
+  border-color: var(--tk-accent-glow);
+}
+.nav-wizard-alt .nav-link.leadpipeline.done {
+  background: var(--tk-green-soft);
+  color: var(--tk-green);
+  border-color: var(--tk-green-glow);
+}
+.nav-wizard-alt .nav-link.leadpipeline.stage-converted-deal {
+  background: var(--tk-green-soft);
+  color: var(--tk-green);
+  border-color: var(--tk-green-glow);
+}
+ 
+ 
+/* ════════════════════════════════════════════════════════════
+   L. SALES PROSPECTS — AI interpretation banner + save button
+   ════════════════════════════════════════════════════════════ */
+ 
+/* AI interpretation info box (shown after AI parse) */
+.tk-ai-interpretation {
+  margin-top: 12px;
+  background: var(--tk-accent-soft);
+  border: 0.5px solid var(--tk-border-default);
+  border-radius: var(--tk-radius-md);
+  padding: 10px 14px;
+  font-size: 13px; color: var(--tk-text-secondary);
+  display: flex; gap: 8px;
+}
+.tk-ai-interpretation i     { color: var(--tk-accent); font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+.tk-ai-interpretation strong { color: var(--tk-accent); }
+ 
+/* "Save to Contacts" green button in prospect table */
+.tk-btn-save-prospect {
+  background: var(--tk-green);
+  color: #fff;
+  border: none;
+  font-size: 11px;
+  padding: 5px 10px;
+  border-radius: var(--tk-radius-md);
+  cursor: pointer;
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.tk-btn-save-prospect:hover { opacity: 0.88; }
+ 
+/* LinkedIn profile button in table */
+.tk-btn-linkedin { font-size: 11px; }
+ 
+/* Two-line prospect name cell */
+.tk-prospect-name     { font-weight: 500; color: var(--tk-text-primary); font-size: 13px; }
+.tk-prospect-title    { color: var(--tk-text-muted); font-size: 11px; }
+.tk-prospect-company  { font-size: 13px; color: var(--tk-text-primary); }
+.tk-prospect-website  { color: var(--tk-accent); font-size: 11px; }
+.tk-prospect-location { font-size: 12px; color: var(--tk-text-secondary); }
+ 
+ 
+/* ════════════════════════════════════════════════════════════
+   M. TEAMS — member cards
+   ════════════════════════════════════════════════════════════ */
+ 
+/* Member card body layout */
+.tk-team-card-body {
+  padding: 20px 18px;
+  display: flex; flex-direction: column;
+  align-items: center; text-align: center;
+}
+ 
+/* Avatar circle */
+.tk-team-avatar {
+  width: 68px; height: 68px; border-radius: 50%;
+  margin-bottom: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; font-weight: 700; color: #fff;
+  overflow: hidden; flex-shrink: 0;
+  background: linear-gradient(135deg, #4ba678, #2eb872);
+}
+.tk-team-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.tk-team-avatar.no-photo {} /* gradient stays from base */
+ 
+.tk-team-name   { font-size: 15px; font-weight: 600; color: var(--tk-text-primary); margin-bottom: 2px; }
+.tk-team-role   { font-size: 12px; color: var(--tk-text-muted); margin-bottom: 14px; }
+ 
+/* Contact info rows inside card */
+.tk-team-info   { width: 100%; display: flex; flex-direction: column; gap: 7px; }
+.tk-team-info-row {
+  display: flex; align-items: center;
+  gap: 8px; font-size: 12.5px; color: var(--tk-text-secondary);
+}
+.tk-team-info-row i { color: var(--tk-text-muted); width: 14px; flex-shrink: 0; }
+ 
+/* Empty state when no team members */
+.tk-empty-state-padded { padding: 48px; }
+ 
+ 
+/* ════════════════════════════════════════════════════════════
+   N. SHARED LAYOUT HELPERS
+   ════════════════════════════════════════════════════════════ */
+ 
+/* Bold name in list/table rows */
+.tk-lead-name   { font-weight: 500; color: var(--tk-text-primary); }
+ 
+/* Row action button cluster */
+.tk-row-actions { display: flex; gap: 5px; }
+ 
+/* Inline spinner for loading states */
+@keyframes tk-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.tk-spin { animation: tk-spin 0.8s linear infinite; display: inline-block; }
+ 
+/* Page-level error block */
+.tk-page-error {
+  background: var(--tk-red-soft);
+  border: 0.5px solid var(--tk-red-glow);
+  border-radius: var(--tk-radius-lg);
+  padding: 16px 20px;
+  color: var(--tk-red); font-size: 13px;
+  display: flex; align-items: center; gap: 8px;
+}
+ 
+/* "Deal title" styled subtitle in page header */
+.tk-page-subtitle-strong {
+  font-weight: 500;
+  color: var(--tk-text-secondary);
+}
+
+/* ════════════════════════════════════════════════════════════
+   P. TEMPLATES MODULE — TemplatesList.jsx
+   ════════════════════════════════════════════════════════════ */
+
+
+/* ── P1. CHANNEL FILTER PILL ROW (list view) ── */
+.tk-template-filter-row {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+/* Each channel filter pill button */
+.tk-template-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--tk-border-default);
+  background: var(--tk-bg-raised);
+  color: var(--tk-text-secondary);
+  font-weight: 400;
+  transition: all 0.12s;
+}
+.tk-template-filter-btn i {
+  font-size: 12px;
+}
+/* Active state set via JS (color is per-channel dynamic) */
+.tk-template-filter-btn.active {
+  font-weight: 700;
+  color: #fff;
+}
+
+
+/* ── P2. TEMPLATE TABLE — name cell ── */
+.tk-template-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.tk-template-ch-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--tk-radius-lg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 15px;
+}
+.tk-template-name-primary {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--tk-text-primary);
+}
+.tk-template-name-sub {
+  color: var(--tk-text-muted);
+  font-size: 11px;
+}
+
+/* Variable chip row in table */
+.tk-template-var-chips {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.tk-template-var-overflow {
+  font-size: 10px;
+  color: var(--tk-text-muted);
+  align-self: center;
+}
+
+/* Updated-at date cell */
+.tk-template-date {
+  font-size: 12px;
+  color: var(--tk-text-muted);
+}
+
+
+/* ── P3. STEP PROGRESS BAR ── */
+/* ── Legacy stepbar (kept for compat) ── */
+.tk-template-stepbar { display: flex; align-items: center; }
+.tk-template-step-node { display: flex; flex-direction: column; align-items: center; min-width: 90px; }
+.tk-template-step-circle { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: all 0.25s; }
+.tk-template-step-circle i { font-size: 15px; }
+.tk-template-step-circle .tk-done-check { color: #fff; font-size: 16px; }
+.tk-template-step-label { font-size: 11px; margin-top: 5px; white-space: nowrap; }
+.tk-template-step-connector { flex: 1; height: 2px; margin-bottom: 18px; transition: background 0.25s; }
+
+/* ── NEW: Enterprise step rail ── */
+.tk-stepbar-rail {
+  display: flex;
+  align-items: center;
+  padding: 16px 20px;
+}
+.tk-stepbar-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+.tk-stepbar-dot {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.tk-stepbar-label {
+  font-size: 10.5px;
+  white-space: nowrap;
+  letter-spacing: 0.2px;
+  transition: color 0.2s;
+}
+.tk-stepbar-line {
+  flex: 1;
+  height: 1px;
+  margin-bottom: 20px;
+  transition: background 0.25s;
+  min-width: 24px;
+}
+
+/* ── NEW: Template page header ── */
+.tk-tpl-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0 18px;
+  gap: 16px;
+}
+.tk-tpl-header-identity {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex: 1;
+}
+.tk-tpl-header-name {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--tk-text-primary);
+  letter-spacing: -0.3px;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 440px;
+}
+.tk-tpl-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+.tk-tpl-header-context {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--tk-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+/* ── NEW: Channel row selector ── */
+.tk-channel-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 20px;
+  cursor: pointer;
+  transition: background 0.15s;
+  border-left: 3px solid transparent;
+}
+.tk-channel-row:hover {
+  background: var(--tk-bg-raised);
+}
+.tk-channel-row-radio {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--tk-border-default);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.15s;
+}
+.tk-channel-row-radio-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  transition: background 0.15s;
+}
+.tk-channel-row-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.tk-channel-row-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+.tk-channel-row-name {
+  font-size: 13px;
+  font-weight: 600;
+  transition: color 0.15s;
+}
+.tk-channel-row-desc {
+  font-size: 12px;
+  color: var(--tk-text-muted);
+}
+.tk-channel-row-badge {
+  font-size: 10px;
+  color: var(--tk-text-muted);
+  background: var(--tk-bg-raised);
+  border: 1px solid var(--tk-border-subtle);
+  border-radius: 4px;
+  padding: 2px 7px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+
+/* ── P4. EMAIL PREVIEW WIDGET ── */
+.tk-email-preview-wrap {
+  background: var(--tk-bg-overlay);
+  border-radius: 10px;
+  padding: 12px;
+}
+.tk-email-preview-shell {
+  background: var(--tk-bg-raised);
+  border-radius: var(--tk-radius-lg);
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+  font-family: Georgia, serif;
+  max-width: 520px;
+  margin: 0 auto;
+}
+.tk-email-preview-topbar {
+  background: var(--tk-bg-overlay);
+  padding: 8px 14px;
+  border-bottom: 0.5px solid var(--tk-border-subtle);
+  font-size: 12px;
+  color: var(--tk-text-muted);
+}
+.tk-email-preview-body {
+  padding: 18px 20px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--tk-text-primary);
+  min-height: 120px;
+}
+.tk-email-preview-footer {
+  background: var(--tk-bg-overlay);
+  border-top: 0.5px solid var(--tk-border-subtle);
+  padding: 6px 14px;
+  font-size: 10px;
+  color: var(--tk-text-muted);
+  text-align: center;
+}
+
+
+/* ── P5. MESSAGE PREVIEW PHONE MOCKUP ── */
+.tk-msg-preview-outer {
+  background: var(--tk-bg-overlay);
+  border-radius: 10px;
+  padding: 14px 10px;
+  display: flex;
+  justify-content: center;
+}
+.tk-msg-preview-phone {
+  width: 270px;
+  background: var(--tk-bg-raised);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+}
+/* Top bar background is dynamic (WA green vs yellow) — kept inline */
+.tk-msg-preview-topbar {
+  padding: 9px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tk-msg-preview-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tk-msg-preview-avatar i {
+  color: #fff;
+  font-size: 13px;
+}
+.tk-msg-preview-app-name {
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+}
+.tk-msg-preview-app-sub {
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 9px;
+}
+/* Body area: WA uses dark bg, SMS uses overlay */
+.tk-msg-preview-body {
+  padding: 12px 10px;
+  min-height: 80px;
+}
+.tk-msg-preview-bubble {
+  border-radius: 0 10px 10px 10px;
+  padding: 8px 12px;
+  max-width: 90%;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--tk-text-primary);
+  white-space: pre-wrap;
+}
+.tk-msg-preview-time {
+  font-size: 9px;
+  color: var(--tk-text-muted);
+  margin-top: 4px;
+  text-align: right;
+}
+
+
+/* ── P6. FIELD ERROR & SAVE ALERT HELPERS ── */
+.tk-field-error {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--tk-red);
+  font-size: 11px;
+  margin-top: 4px;
+}
+.tk-field-error i {
+  font-size: 12px;
+}
+
+/* SaveAlert reuses .tk-feedback-strip from section O16 */
+
+
+/* ── P7. STEP FOOTER NAV BAR ── */
+.tk-step-footer-bar {
+  background: var(--tk-bg-raised);
+  border: 0.5px solid var(--tk-border-subtle);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-top: 16px;
+}
+.tk-step-footer-bar-msg {
+  margin-bottom: 10px;
+}
+.tk-step-footer-bar-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.tk-btn-step-next {
+  border-radius: var(--tk-radius-lg);
+  padding: 8px 22px;
+  font-weight: 600;
+}
+
+
+/* ── P8. CREATE VIEW — page header back button row ── */
+.tk-create-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+/* Template ID badge in subtitle */
+.tk-template-id-badge {
+  margin-left: 8px;
+  color: var(--tk-text-muted);
+  font-size: 12px;
+}
+
+/* "Saved as #ID" success line */
+.tk-template-saved-line {
+  font-size: 11px;
+  color: var(--tk-green);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ── Template identity strip (header when editing) ── */
+.tk-tpl-identity-strip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 5px;
+  flex-wrap: wrap;
+}
+
+.tk-tpl-channel-pill {
+  display: inline-flex;
+  align-items: center;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 9px;
+  border-radius: 20px;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+.tk-tpl-identity-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--tk-text-primary);
+  max-width: 360px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tk-tpl-identity-id {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--tk-text-muted);
+  background: var(--tk-bg-raised);
+  border: 1px solid var(--tk-border-default);
+  border-radius: 4px;
+  padding: 1px 7px;
+  letter-spacing: 0.3px;
+}
+
+
+/* ── P9. STEP 1 — Channel picker cards ── */
+.tk-tpl-channel-card {
+  cursor: pointer;
+  border-radius: 12px;
+  padding: 18px 16px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.15s;
+  /* border & background driven by JS selection */
+}
+.tk-tpl-channel-card-accent-bar {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2.5px;
+  border-radius: 12px 12px 0 0;
+  /* background driven by JS */
+}
+.tk-tpl-channel-card-top-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.tk-tpl-channel-icon-wrap {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: var(--tk-bg-overlay);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.tk-tpl-channel-icon-wrap i {
+  font-size: 22px;
+}
+.tk-tpl-channel-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--tk-text-primary);
+  margin-bottom: 4px;
+}
+.tk-tpl-channel-desc {
+  font-size: 11px;
+  color: var(--tk-text-muted);
+  margin: 0;
+  line-height: 1.6;
+}
+
+
+/* ── P10. STEP 1 — Template name card header tint ── */
+/* Header background is dynamic (tinted with channel color) — stays inline.
+   Structure classes only: */
+.tk-tpl-name-card-header {
+  /* uses .tk-card-header */
+}
+
+
+/* ── P11. STEP 2 — Add custom variable section ── */
+.tk-add-var-block {
+  background: var(--tk-bg-raised);
+  border: 0.5px dashed var(--tk-border-default);
+  border-radius: var(--tk-radius-lg);
+  padding: 12px 14px;
+  margin-bottom: 14px;
+}
+.tk-add-var-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--tk-text-secondary);
+  display: block;
+  margin-bottom: 8px;
+}
+.tk-add-var-label i {
+  color: var(--tk-accent);
+  margin-right: 4px;
+}
+.tk-add-var-hint {
+  font-size: 10px;
+  color: var(--tk-text-muted);
+}
+
+/* Preset chips label */
+.tk-presets-label {
+  font-size: 10.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--tk-text-muted);
+  display: block;
+  margin-bottom: 8px;
+}
+.tk-presets-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+/* Variable list table */
+.tk-var-list {
+  border: 0.5px solid var(--tk-border-subtle);
+  border-radius: var(--tk-radius-lg);
+  overflow: hidden;
+}
+.tk-var-list-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  background: var(--tk-bg-raised);
+}
+.tk-var-list-row + .tk-var-list-row {
+  border-top: 0.5px solid var(--tk-border-subtle);
+}
+.tk-var-key-chip {
+  font-family: monospace;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 4px;
+  padding: 2px 6px;
+  white-space: nowrap;
+  /* color and background driven by channel color — inline */
+}
+.tk-var-label-text {
+  flex: 1;
+  font-size: 12px;
+  color: var(--tk-text-secondary);
+}
+.tk-var-sample-input {
+  max-width: 130px;
+  font-size: 11px;
+}
+.tk-btn-remove-var {
+  background: var(--tk-red-soft);
+  color: var(--tk-red);
+  padding: 2px 7px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  line-height: 1;
+}
+.tk-btn-remove-var:hover { opacity: 0.8; }
+
+/* Empty variable state */
+.tk-var-empty-state {
+  border: 0.5px dashed var(--tk-border-default);
+  border-radius: var(--tk-radius-lg);
+  padding: 28px 16px;
+}
+
+/* How-variables-work info panel */
+.tk-how-vars-panel {
+  position: sticky;
+  top: 70px;
+}
+.tk-how-vars-example {
+  background: var(--tk-accent-soft);
+  border-radius: var(--tk-radius-lg);
+  padding: 12px;
+  border: 0.5px solid var(--tk-border-default);
+  margin-bottom: 10px;
+}
+.tk-how-vars-example-title {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--tk-accent);
+  margin-bottom: 6px;
+}
+.tk-how-vars-example-body {
+  font-size: 12px;
+  font-family: monospace;
+  color: var(--tk-text-primary);
+  line-height: 1.7;
+}
+.tk-how-vars-token {
+  background: var(--tk-accent-soft);
+  color: var(--tk-accent);
+  border-radius: 3px;
+  padding: 0 3px;
+}
+.tk-how-vars-tip {
+  background: var(--tk-yellow-soft);
+  border-radius: var(--tk-radius-lg);
+  padding: 12px;
+  border: 0.5px solid var(--tk-yellow-glow);
+  font-size: 11px;
+  color: var(--tk-yellow);
+}
+.tk-how-vars-desc {
+  font-size: 12px;
+  color: var(--tk-text-secondary);
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+
+
+/* ── P12. STEP 3 — Message body editor ── */
+/* Char count label */
+.tk-charcount {
+  font-size: 11px;
+  font-weight: 600;
+}
+.tk-charcount.over { color: var(--tk-red); }
+.tk-charcount.ok   { color: var(--tk-text-muted); }
+.tk-charcount-seg {
+  color: var(--tk-text-muted);
+  margin-left: 4px;
+}
+
+/* Variable insert chips row */
+.tk-insert-var-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--tk-text-muted);
+  display: block;
+  margin-bottom: 6px;
+}
+.tk-insert-var-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+/* Individual var chip — border/color is channel-dynamic, kept inline */
+.tk-insert-var-chip {
+  cursor: pointer;
+  font-family: monospace;
+  font-size: 11px;
+  font-weight: 700;
+}
+.tk-insert-var-chip:hover { opacity: 0.8; }
+
+/* HTML toolbar */
+.tk-html-toolbar {
+  display: flex;
+  gap: 3px;
+  flex-wrap: wrap;
+  background: var(--tk-bg-raised);
+  border: 0.5px solid var(--tk-border-default);
+  border-radius: 8px 8px 0 0;
+  padding: 5px 8px;
+}
+.tk-toolbar-divider {
+  width: 0.5px;
+  background: var(--tk-border-default);
+  margin: 2px 3px;
+  align-self: stretch;
+}
+.tk-toolbar-html-label {
+  align-self: center;
+  color: var(--tk-text-muted);
+  font-size: 10px;
+}
+
+/* Textarea for email body (attached below toolbar) */
+.tk-body-textarea-email {
+  font-size: 13px;
+  line-height: 1.75;
+  font-family: monospace;
+  border-radius: 0 0 8px 8px;
+  border-top: none;
+  resize: vertical;
+}
+/* Textarea for WA/SMS body */
+.tk-body-textarea-msg {
+  font-size: 13px;
+  line-height: 1.75;
+  border-radius: 8px;
+  resize: vertical;
+}
+
+/* Sticky live preview panel */
+.tk-live-preview-sticky {
+  position: sticky;
+  top: 70px;
+}
+
+
+/* ── P13. STEP 4 — Success banner ── */
+.tk-template-success-banner {
+  background: var(--tk-green-soft);
+  border: 0.5px solid var(--tk-green-glow);
+  border-radius: 10px;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.tk-template-success-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--tk-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.tk-template-success-icon i {
+  color: #fff;
+  font-size: 16px;
+}
+.tk-template-success-text {
+  flex: 1;
+}
+.tk-template-success-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--tk-green);
+}
+.tk-template-success-sub {
+  font-size: 11px;
+  color: var(--tk-text-muted);
+}
+
+
+/* ── P14. STEP 4 — Summary table rows ── */
+.tk-summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+.tk-summary-row-label {
+  color: var(--tk-text-muted);
+}
+.tk-summary-row-value {
+  font-weight: 500;
+  color: var(--tk-text-primary);
+}
+
+/* Sample values table row */
+.tk-sample-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.tk-sample-key {
+  min-width: 100px;
+  font-family: monospace;
+  font-size: 10px;
+  font-weight: 700;
+}
+.tk-sample-input {
+  font-size: 12px;
+}
+
+/* Full-width action buttons in step 4 */
+.tk-btn-full {
+  width: 100%;
+  border-radius: var(--tk-radius-lg);
+  font-weight: 600;
+  padding: 10px;
+}
+.tk-btn-full-ghost {
+  width: 100%;
+  border-radius: var(--tk-radius-lg);
+  padding: 9px;
+}
+/* ════════════════════════════════════════════════════════════
+   O. MARKETING MODULE — Extracted from inline styles
+   All classes below replace previously-inline style="" blocks
+   across: CampaignsList, CampaignAnalytics, CampaignJourney,
+           ChannelsList, TemplatesList, MarketingProspects,
+           MarketingDashboard
+   ════════════════════════════════════════════════════════════ */
+
+
+/* ── O1. CHANNEL ICON BADGE (channel icon square in table rows) ── */
+.tk-channel-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--tk-radius-lg);
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--tk-bg-overlay); /* overridden inline via style when soft color is known */
+  font-size: 16px;
+}
+
+/* Campaign name + date two-liner */
+.tk-campaign-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.tk-campaign-name-cell .tk-name-line {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--tk-text-primary);
+}
+.tk-campaign-name-cell .tk-date-line {
+  font-size: 11px;
+  color: var(--tk-text-muted);
+}
+
+/* Sent/Delivered numbers */
+.tk-sent-delivered {
+  font-size: 13px;
+}
+.tk-sent-delivered .tk-delivered-count {
+  color: var(--tk-text-muted);
+}
+
+/* Audience count cell */
+.tk-audience-count {
+  font-size: 13px;
+  color: var(--tk-text-secondary);
+}
+
+/* Scheduled date cell */
+.tk-scheduled-date {
+  font-size: 12px;
+  color: var(--tk-text-muted);
+}
+
+/* Row actions cluster */
+.tk-action-cluster {
+  display: flex;
+  gap: 5px;
+}
+
+
+/* ── O2. CHANNEL SIDEBAR (CampaignsList left rail) ── */
+.tk-channel-sidebar {
+  position: sticky;
+  top: 70px;
+  margin-bottom: 0;
+}
+
+.tk-channel-sidebar-header {
+  padding: 10px 14px;
+}
+
+.tk-channel-sidebar-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--tk-text-muted);
+}
+
+.tk-channel-sidebar-list {
+  padding: 6px 0;
+}
+
+/* Each channel nav button */
+.tk-channel-nav-btn {
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  border-left: 2px solid transparent;
+  color: var(--tk-text-secondary);
+  font-weight: 400;
+  font-size: 12.5px;
+  transition: all 0.12s;
+}
+.tk-channel-nav-btn:hover {
+  background: var(--tk-bg-hover);
+}
+.tk-channel-nav-btn.active {
+  background: var(--tk-accent-soft);
+  font-weight: 600;
+}
+.tk-channel-nav-btn .tk-channel-nav-inner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tk-channel-nav-btn .tk-channel-nav-icon {
+  font-size: 14px;
+  color: var(--tk-text-muted);
+}
+.tk-channel-nav-btn.active .tk-channel-nav-icon {
+  /* color set via JS CSS variable binding */
+}
+
+/* Count badge inside channel nav */
+.tk-channel-count-badge {
+  font-size: 9px;
+  padding: 1px 6px;
+}
+
+
+/* ── O3. CAMPAIGN ANALYTICS — Hero KPIs ── */
+.tk-hero-kpi {
+  padding: 20px 24px;
+}
+.tk-hero-kpi + .tk-hero-kpi {
+  border-left: 0.5px solid var(--tk-border-subtle);
+}
+.tk-hero-kpi-label-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 8px;
+}
+.tk-hero-kpi-label {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--tk-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.tk-hero-kpi-label-icon {
+  font-size: 13px;
+}
+.tk-hero-kpi-value {
+  font-size: 34px;
+  font-weight: 700;
+  color: var(--tk-text-primary);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.tk-hero-kpi-rate {
+  margin-top: 4px;
+  font-size: 13px;
+}
+.tk-hero-kpi-rate .tk-rate-number {
+  font-weight: 700;
+}
+.tk-hero-kpi-rate .tk-rate-label {
+  color: var(--tk-text-muted);
+  margin-left: 4px;
+}
+
+
+/* ── O4. FUNNEL STEP ── */
+.tk-funnel-step {
+  margin-bottom: 14px;
+}
+.tk-funnel-step:last-child {
+  margin-bottom: 0;
+}
+.tk-funnel-step-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.tk-funnel-step-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tk-funnel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tk-funnel-step-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--tk-text-primary);
+}
+.tk-funnel-step-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.tk-funnel-dropoff {
+  font-size: 11px;
+  color: var(--tk-red);
+  font-weight: 500;
+}
+.tk-funnel-value {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--tk-text-primary);
+  min-width: 52px;
+  text-align: right;
+}
+.tk-funnel-rate {
+  font-size: 12px;
+  font-weight: 700;
+  min-width: 40px;
+  text-align: right;
+}
+.tk-funnel-bar-track {
+  height: 10px;
+  background: var(--tk-border-subtle);
+  border-radius: 20px;
+  overflow: hidden;
+}
+.tk-funnel-bar-fill {
+  height: 100%;
+  border-radius: 20px;
+  transition: width 1s ease;
+}
+.tk-funnel-arrow {
+  text-align: center;
+  margin-top: 2px;
+}
+.tk-funnel-arrow i {
+  font-size: 14px;
+  color: var(--tk-text-disabled);
+}
+
+/* Drop-off table (right side panel) */
+.tk-dropoff-label {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--tk-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 12px;
+}
+.tk-dropoff-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.tk-dropoff-row-label {
+  font-size: 12px;
+  color: var(--tk-text-muted);
+}
+.tk-dropoff-row-value {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* Funnel divider column border */
+.tk-funnel-left-col {
+  border-right: 0.5px solid var(--tk-border-subtle);
+  padding-right: 24px;
+}
+.tk-funnel-right-col {
+  padding-left: 24px;
+}
+
+
+/* ── O5. BOUNCED CALLOUT ── */
+.tk-bounced-callout {
+  margin-top: 16px;
+  padding: 12px 16px;
+  border-radius: var(--tk-radius-lg);
+  background: var(--tk-red-soft);
+  border: 0.5px solid var(--tk-red-glow);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.tk-bounced-callout-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.tk-bounced-icon-wrap {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--tk-radius-lg);
+  background: var(--tk-red-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tk-bounced-icon-wrap i {
+  color: var(--tk-red);
+  font-size: 14px;
+}
+.tk-bounced-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--tk-red);
+}
+.tk-bounced-desc {
+  font-size: 11px;
+  color: var(--tk-text-muted);
+  margin-top: 1px;
+}
+.tk-bounced-callout-right {
+  text-align: right;
+  flex-shrink: 0;
+  margin-left: 12px;
+}
+.tk-bounced-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--tk-red);
+  line-height: 1;
+}
+.tk-bounced-rate {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--tk-red);
+}
+
+
+/* ── O6. ANALYTICS PAGE HEADER CHANNEL ICON ── */
+.tk-analytics-channel-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--tk-bg-raised);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.tk-analytics-channel-icon i {
+  font-size: 18px;
+}
+.tk-analytics-header-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+.tk-analytics-channel-meta {
+  padding-left: 46px;
+}
+.tk-analytics-channel-meta i {
+  margin-right: 4px;
+}
+.tk-analytics-channel-meta .tk-started-meta {
+  margin-left: 14px;
+}
+.tk-analytics-actions {
+  display: flex;
+  gap: 8px;
+}
+
+
+/* ── O7. AI SUMMARY CARD ── */
+.tk-ai-summary-bubble {
+  background: var(--tk-accent-soft);
+  border: 0.5px solid var(--tk-border-default);
+  border-radius: var(--tk-radius-lg);
+  padding: 14px;
+}
+.tk-ai-summary-inner {
+  display: flex;
+  gap: 10px;
+}
+.tk-ai-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--tk-accent);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.tk-ai-avatar i {
+  font-size: 15px;
+}
+.tk-ai-summary-text {
+  font-size: 14px;
+  color: var(--tk-text-primary);
+  line-height: 1.7;
+  margin: 0;
+}
+.tk-ai-loading-row {
+  display: flex;
+  gap: 10px;
+  color: var(--tk-text-muted);
+  font-size: 13px;
+  align-items: center;
+}
+.tk-ai-error-row {
+  font-size: 13px;
+  color: var(--tk-text-muted);
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+/* AI card header "Regenerate" button */
+.tk-card-header-justify {
+  justify-content: space-between;
+}
+
+
+/* ── O8. ACTION ITEMS (Recommended Actions) ── */
+.tk-action-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.tk-action-index-badge {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 700;
+}
+.tk-action-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+}
+.tk-action-icon {
+  font-size: 14px;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+.tk-action-text {
+  font-size: 13px;
+  color: var(--tk-text-secondary);
+  line-height: 1.55;
+}
+.tk-action-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 14px;
+  border-top: 0.5px solid var(--tk-border-subtle);
+  margin-top: 6px;
+}
+
+/* Push to Sales purple button */
+.tk-btn-push-sales {
+  background: var(--tk-purple);
+  color: #fff;
+  border: none;
+}
+.tk-btn-push-sales:hover:not(:disabled) {
+  background: var(--tk-purple);
+  opacity: 0.88;
+}
+
+
+/* ── O9. CAMPAIGN JOURNEY — Step navigator (left sidebar) ── */
+.tk-journey-sidebar {
+  position: sticky;
+  top: 70px;
+  margin-bottom: 0;
+}
+
+.tk-journey-sidebar-header {
+  padding: 12px 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.tk-journey-sidebar-title {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--tk-text-muted);
+}
+
+.tk-journey-progress-wrap {
+  width: 100%;
+}
+
+.tk-journey-progress-track {
+  height: 4px;
+  background: var(--tk-border-subtle);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.tk-journey-progress-fill {
+  height: 100%;
+  background: var(--tk-accent);
+  border-radius: 4px;
+  transition: width 0.4s ease;
+}
+
+.tk-journey-progress-label {
+  font-size: 10px;
+  color: var(--tk-text-muted);
+  margin-top: 4px;
+  display: block;
+}
+
+.tk-journey-steps-list {
+  padding: 4px 0;
+}
+
+/* Individual step nav row */
+.tk-step-nav-row {
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  transition: background 0.12s, color 0.12s;
+}
+.tk-step-nav-row:hover:not(.locked) {
+  background: var(--tk-bg-hover);
+  cursor: pointer;
+}
+.tk-step-nav-row.active {
+  background: var(--tk-accent-soft);
+  border-left: 2px solid var(--tk-accent);
+  color: var(--tk-accent);
+}
+.tk-step-nav-row.done {
+  color: var(--tk-text-secondary);
+  border-left: 2px solid transparent;
+}
+.tk-step-nav-row.locked {
+  opacity: 0.4;
+  cursor: not-allowed;
+  border-left: 2px solid transparent;
+  color: var(--tk-text-muted);
+}
+
+/* Step number/icon circle */
+.tk-step-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+.tk-step-circle.done {
+  background: var(--tk-accent);
+  color: #fff;
+}
+.tk-step-circle.active {
+  background: var(--tk-accent-soft);
+  color: var(--tk-accent);
+}
+.tk-step-circle.pending {
+  background: var(--tk-bg-overlay);
+  color: var(--tk-text-muted);
+}
+
+/* Step label text */
+.tk-step-nav-info {}
+.tk-step-nav-label {
+  font-size: 13px;
+}
+.tk-step-nav-label.active {
+  font-weight: 600;
+}
+.tk-step-done-badge {
+  font-size: 10px;
+  color: var(--tk-green);
+}
+
+/* Journey loading state */
+.tk-journey-loading {
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Error / validation alert strip */
+.tk-form-error-strip {
+  background: var(--tk-red-soft);
+  border: 0.5px solid var(--tk-red-glow);
+  border-radius: var(--tk-radius-lg);
+  padding: 10px 14px;
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--tk-red);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Step footer nav bar */
+.tk-step-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 0.5px solid var(--tk-border-subtle);
+}
+.tk-step-footer-saving {
+  color: var(--tk-text-muted);
+  font-size: 12px;
+}
+
+/* Launch Campaign green button */
+.tk-btn-launch {
+  background: var(--tk-green);
+  border-color: var(--tk-green);
+  color: #fff;
+}
+.tk-btn-launch:hover:not(:disabled) {
+  background: var(--tk-accent-hover);
+  border-color: var(--tk-accent-hover);
+}
+
+
+/* ── O10. STEP 1 DETAILS — Goal selector cards ── */
+.tk-goal-card {
+  cursor: pointer;
+  border-radius: var(--tk-radius-lg);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.15s;
+  border: 1.5px solid var(--tk-border-default);
+  background: var(--tk-bg-raised);
+}
+.tk-goal-card.active {
+  border-color: var(--tk-accent);
+  background: var(--tk-accent-soft);
+}
+.tk-goal-card-icon {
+  font-size: 17px;
+  color: var(--tk-text-muted);
+}
+.tk-goal-card.active .tk-goal-card-icon {
+  color: var(--tk-accent);
+}
+.tk-goal-card-label {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--tk-text-secondary);
+}
+.tk-goal-card.active .tk-goal-card-label {
+  font-weight: 600;
+  color: var(--tk-accent);
+}
+.tk-goal-card-check {
+  margin-left: auto;
+  color: var(--tk-accent);
+}
+
+/* Required field asterisk */
+.tk-required {
+  color: var(--tk-red);
+}
+
+
+/* ── O11. STEP 2 CHANNEL — Channel picker cards ── */
+.tk-channel-pick-card {
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 16px;
+  transition: all 0.15s;
+  border: 1.5px solid var(--tk-border-default);
+  background: var(--tk-bg-raised);
+}
+.tk-channel-pick-card.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.tk-channel-pick-card-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.tk-channel-pick-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.tk-channel-pick-icon i {
+  font-size: 20px;
+}
+.tk-channel-pick-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--tk-text-primary);
+}
+.tk-channel-pick-status {
+  font-size: 11px;
+  margin-top: 3px;
+}
+.tk-channel-pick-not-config {
+  color: var(--tk-text-disabled);
+}
+.tk-channel-not-config-link {
+  font-size: 11px;
+  margin-top: 10px;
+  color: var(--tk-text-muted);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.tk-channel-not-config-link:hover {
+  color: var(--tk-accent);
+}
+
+
+/* ── O12. CHANNELS LIST — Channel config grid ── */
+.tk-channels-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  padding: 4px 0;
+}
+
+/* Each channel config card */
+.tk-channel-card {
+  background: var(--tk-bg-raised);
+  border: 0.5px solid var(--tk-border-subtle);
+  border-radius: var(--tk-radius-lg);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: border-color 0.15s;
+}
+.tk-channel-card:hover {
+  border-color: var(--tk-border-default);
+}
+.tk-channel-card.configured {
+  border-color: var(--tk-border-default);
+}
+
+.tk-channel-card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.tk-channel-card-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 20px;
+}
+.tk-channel-card-meta {
+  flex: 1;
+  min-width: 0;
+}
+.tk-channel-card-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--tk-text-primary);
+  margin-bottom: 2px;
+}
+.tk-channel-card-provider {
+  font-size: 11px;
+  color: var(--tk-text-muted);
+}
+.tk-channel-card-status {
+  flex-shrink: 0;
+}
+
+.tk-channel-card-footer {
+  display: flex;
+  gap: 8px;
+}
+
+/* Channel status dot */
+.tk-config-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+}
+.tk-config-dot.on  { background: var(--tk-green);       }
+.tk-config-dot.off { background: var(--tk-text-disabled); }
+
+/* Loading spinner centered */
+.tk-channels-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+  gap: 10px;
+  color: var(--tk-text-muted);
+  font-size: 13px;
+}
+.tk-channels-loading i {
+  font-size: 20px;
+}
+
+
+/* ── O13. CHANNEL DRAWER (side panel) ── */
+.tk-channel-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 420px;
+  background: var(--tk-bg-surface);
+  border-left: 0.5px solid var(--tk-border-default);
+  z-index: 1050;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.tk-drawer-header {
+  padding: 16px 22px;
+  border-bottom: 0.5px solid var(--tk-border-subtle);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+.tk-drawer-channel-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.tk-drawer-channel-icon i {
+  font-size: 18px;
+}
+.tk-drawer-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--tk-text-primary);
+}
+.tk-drawer-subtitle {
+  font-size: 11px;
+  color: var(--tk-text-muted);
+}
+.tk-drawer-close {
+  margin-left: auto;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--tk-radius-md);
+  border: none;
+  background: transparent;
+  color: var(--tk-text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+}
+.tk-drawer-close:hover {
+  background: var(--tk-bg-hover);
+  color: var(--tk-text-primary);
+}
+
+.tk-drawer-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px 22px;
+}
+
+.tk-drawer-footer {
+  padding: 12px 22px;
+  border-top: 0.5px solid var(--tk-border-subtle);
+  background: var(--tk-bg-raised);
+  flex-shrink: 0;
+}
+.tk-drawer-footer-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Drawer backdrop */
+.tk-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1040;
+}
+
+
+/* ── O14. SECTION FORM BLOCK (inside drawer) ── */
+.tk-form-section-block {
+  background: var(--tk-bg-raised);
+  border: 0.5px solid var(--tk-border-subtle);
+  border-radius: var(--tk-radius-lg);
+  padding: 12px 14px;
+  margin-bottom: 12px;
+}
+
+/* Section label header inside form block */
+.tk-section-label {
+  font-size: 10.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--tk-text-muted);
+  margin-bottom: 10px;
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+
+/* ── O15. TOGGLE SWITCH ── */
+.tk-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--tk-bg-raised);
+  border: 0.5px solid var(--tk-border-subtle);
+  border-radius: var(--tk-radius-lg);
+  padding: 10px 14px;
+  margin-bottom: 12px;
+}
+.tk-toggle-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--tk-text-primary);
+}
+.tk-toggle-desc {
+  font-size: 11px;
+  color: var(--tk-text-muted);
+}
+.tk-toggle-switch {
+  width: 44px;
+  height: 24px;
+  border-radius: 12px;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+.tk-toggle-switch .tk-toggle-knob {
+  position: absolute;
+  top: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  transition: left 0.2s;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+}
+.tk-toggle-switch.on  .tk-toggle-knob { left: 23px; }
+.tk-toggle-switch.off .tk-toggle-knob { left: 3px;  }
+
+
+/* ── O16. TEST CONNECTION SECTION ── */
+.tk-test-section {
+  background: var(--tk-green-soft);
+  border: 0.5px solid var(--tk-green-glow);
+  border-radius: var(--tk-radius-lg);
+  padding: 12px 14px;
+}
+.tk-test-input-row {
+  display: flex;
+  gap: 8px;
+}
+.tk-test-input-row input {
+  flex: 1;
+}
+.tk-test-hint {
+  font-size: 10px;
+  color: var(--tk-text-muted);
+  margin-top: 4px;
+  display: block;
+}
+.tk-btn-test-send {
+  background: var(--tk-green);
+  color: #fff;
+  border: none;
+  flex-shrink: 0;
+}
+
+/* Test / save result feedback strip */
+.tk-feedback-strip {
+  margin-top: 10px;
+  padding: 8px 12px;
+  border-radius: 7px;
+  font-size: 12px;
+  display: flex;
+  gap: 7px;
+  align-items: center;
+}
+.tk-feedback-strip.success {
+  background: var(--tk-green-soft);
+  color: var(--tk-green);
+  border: 0.5px solid var(--tk-green-glow);
+}
+.tk-feedback-strip.error {
+  background: var(--tk-red-soft);
+  color: var(--tk-red);
+  border: 0.5px solid var(--tk-red-glow);
+}
+.tk-feedback-strip.bottom {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+
+/* ── O17. TEMPLATES LIST — Step progress bar ── */
+.tk-template-stepbar {
+  display: flex;
+  align-items: center;
+}
+
+.tk-template-step-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 90px;
+}
+.tk-template-step-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s;
+}
+.tk-template-step-label {
+  font-size: 11px;
+  margin-top: 5px;
+  white-space: nowrap;
+}
+
+.tk-template-step-connector {
+  flex: 1;
+  height: 2px;
+  margin-bottom: 18px;
+  transition: background 0.25s;
+}
+
+
+/* ── O18. EMAIL PREVIEW WIDGET ── */
+.tk-email-preview-wrap {
+  background: var(--tk-bg-overlay);
+  border-radius: 10px;
+  padding: 12px;
+}
+.tk-email-preview-shell {
+  background: var(--tk-bg-raised);
+  border-radius: var(--tk-radius-lg);
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+  font-family: Georgia, serif;
+  max-width: 520px;
+  margin: 0 auto;
+}
+.tk-email-preview-header {
+  background: var(--tk-bg-overlay);
+  padding: 8px 14px;
+  border-bottom: 0.5px solid var(--tk-border-subtle);
+  font-size: 12px;
+  color: var(--tk-text-muted);
+}
+.tk-email-preview-body {
+  padding: 18px 20px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--tk-text-primary);
+  min-height: 120px;
+}
+.tk-email-preview-footer {
+  background: var(--tk-bg-overlay);
+  border-top: 0.5px solid var(--tk-border-subtle);
+  padding: 6px 14px;
+  font-size: 10px;
+  color: var(--tk-text-muted);
+  text-align: center;
+}
+
+/* Message preview (WhatsApp / SMS phone mockup) */
+.tk-msg-preview-wrap {
+  background: var(--tk-bg-overlay);
+  border-radius: 10px;
+  padding: 14px 10px;
+  display: flex;
+  justify-content: center;
+}
+.tk-msg-preview-phone {
+  width: 270px;
+  background: var(--tk-bg-raised);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.4);
+}
+.tk-msg-preview-topbar {
+  padding: 9px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.tk-msg-preview-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.tk-msg-preview-avatar i {
+  color: #fff;
+  font-size: 13px;
+}
+
+
+/* ── O19. TEMPLATES — Variable tag ── */
+.tk-var-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-family: monospace;
+  font-size: 11px;
+  cursor: pointer;
+  transition: opacity 0.12s;
+}
+.tk-var-tag:hover {
+  opacity: 0.8;
+}
+
+
+/* ── O20. MARKETING DASHBOARD — Metric cards ── */
+/* Uses Bootstrap grid + existing .card class as base.
+   These additions make the icon + value layout consistent. */
+.tk-metric-card-body {
+  padding: 12px 14px;
+}
+.tk-metric-card-inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.tk-metric-card-info {}
+.tk-metric-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--tk-text-muted);
+}
+.tk-metric-sub {
+  font-size: 11px;
+  color: var(--tk-text-muted);
+  display: block;
+  margin-top: 1px;
+}
+.tk-metric-value {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--tk-text-primary);
+  line-height: 1.2;
+  margin-top: 4px;
+}
+.tk-metric-icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--tk-radius-lg);
+  flex-shrink: 0;
+}
+.tk-metric-icon-wrap.primary  { background: var(--tk-accent-soft);  color: var(--tk-accent);  }
+.tk-metric-icon-wrap.warning  { background: var(--tk-yellow-soft); color: var(--tk-yellow);  }
+.tk-metric-icon-wrap.success  { background: var(--tk-green-soft);  color: var(--tk-green);   }
+
+
+/* ── O21. PROSPECTS PAGE — Clear search / show-filters bar ── */
+.tk-page-actions-bar {
+  display: flex;
+  gap: 8px;
+}
+
+/* Prospect table cells are already covered by .tk-prospect-* in section L above */
+
+/* ════════════════════════════════════════════════════════════
+   O21-B. SALES PROSPECTS — AI Finder v2 (redesigned)
+   ════════════════════════════════════════════════════════════ */
+
+/* ── Hero AI Search ── */
+.tk-prospect-hero {
+  background: linear-gradient(135deg, rgba(46,184,114,0.06) 0%, rgba(137,87,229,0.04) 100%);
+  border: 1px solid var(--tk-border-default);
+  border-radius: var(--tk-radius-xl);
+  padding: 28px 32px;
+  margin-bottom: 16px;
+  position: relative;
+  overflow: hidden;
+}
+.tk-prospect-hero::before {
+  content: '';
+  position: absolute;
+  top: -50px; right: -50px;
+  width: 180px; height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(46,184,114,0.14) 0%, transparent 70%);
+  pointer-events: none;
+}
+.tk-prospect-hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--tk-accent);
+  background: var(--tk-accent-soft);
+  border: 1px solid rgba(46,184,114,0.2);
+  border-radius: 20px;
+  padding: 3px 10px;
+  margin-bottom: 12px;
+}
+.tk-prospect-hero-title {
+  font-size: 21px;
+  font-weight: 700;
+  color: var(--tk-text-primary);
+  margin: 0 0 5px;
+  line-height: 1.3;
+}
+.tk-prospect-hero-sub {
+  font-size: 13px;
+  color: var(--tk-text-muted);
+  margin: 0 0 20px;
+}
+
+/* Textarea with left icon */
+.tk-ai-search-wrap { position: relative; }
+.tk-ai-search-icon {
+  position: absolute;
+  left: 14px; top: 15px;
+  color: var(--tk-accent);
+  font-size: 19px;
+  pointer-events: none;
+  z-index: 1;
+}
+.tk-ai-search-textarea {
+  width: 100%;
+  background: var(--tk-bg-raised);
+  border: 1px solid var(--tk-border-default);
+  border-radius: var(--tk-radius-lg);
+  color: var(--tk-text-primary);
+  font-size: 13.5px;
+  padding: 13px 16px 13px 44px;
+  resize: none;
+  min-height: 78px;
+  line-height: 1.65;
+  transition: border-color .2s, box-shadow .2s;
+  font-family: inherit;
+}
+.tk-ai-search-textarea:focus {
+  outline: none;
+  border-color: var(--tk-accent);
+  box-shadow: 0 0 0 3px var(--tk-accent-glow);
+}
+.tk-ai-search-textarea::placeholder { color: var(--tk-text-muted); }
+.tk-ai-search-textarea:disabled { opacity: 0.55; }
+
+.tk-ai-search-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 12px;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.tk-ai-search-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  background: var(--tk-accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--tk-radius-md);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s, box-shadow .15s, transform .1s;
+  font-family: inherit;
+  flex-shrink: 0;
+}
+.tk-ai-search-btn:hover:not(:disabled) {
+  background: var(--tk-accent-hover);
+  box-shadow: 0 4px 16px var(--tk-accent-glow);
+  transform: translateY(-1px);
+}
+.tk-ai-search-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+/* Quick prompt chips */
+.tk-prompt-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.tk-prompt-chips-label {
+  font-size: 11px;
+  color: var(--tk-text-muted);
+  flex-shrink: 0;
+}
+.tk-prompt-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  background: var(--tk-bg-raised);
+  border: 1px solid var(--tk-border-default);
+  border-radius: 20px;
+  font-size: 11.5px;
+  color: var(--tk-text-secondary);
+  cursor: pointer;
+  transition: border-color .15s, color .15s, background .15s;
+  font-family: inherit;
+  white-space: nowrap;
+}
+.tk-prompt-chip:hover {
+  border-color: rgba(46,184,114,0.4);
+  color: var(--tk-accent);
+  background: var(--tk-accent-soft);
+}
+
+/* AI result interpretation banner */
+.tk-ai-result-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, rgba(46,184,114,0.07), rgba(137,87,229,0.05));
+  border: 1px solid rgba(46,184,114,0.22);
+  border-radius: var(--tk-radius-lg);
+  margin-top: 14px;
+}
+.tk-ai-result-banner-dot {
+  width: 28px; height: 28px;
+  background: var(--tk-accent-soft);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: var(--tk-accent);
+  font-size: 14px;
+  margin-top: 1px;
+}
+.tk-ai-result-banner-text {
+  font-size: 12.5px;
+  color: var(--tk-text-secondary);
+  line-height: 1.6;
+}
+.tk-ai-result-banner-text strong { color: var(--tk-accent); }
+
+/* ── Filter Rail ── */
+.tk-filter-rail {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding: 12px 18px;
+  background: var(--tk-bg-surface);
+  border: 1px solid var(--tk-border-default);
+  border-radius: var(--tk-radius-lg);
+  margin-bottom: 16px;
+}
+.tk-filter-rail-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--tk-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  flex-shrink: 0;
+  margin-right: 4px;
+}
+.tk-filter-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 12px;
+  background: var(--tk-bg-raised);
+  border: 1px solid var(--tk-border-default);
+  border-radius: var(--tk-radius-md);
+  font-size: 12px;
+  color: var(--tk-text-secondary);
+  cursor: pointer;
+  transition: all .15s;
+  font-family: inherit;
+  white-space: nowrap;
+}
+.tk-filter-chip:hover { border-color: var(--tk-border-strong); color: var(--tk-text-primary); }
+.tk-filter-chip.active { background: var(--tk-accent-soft); border-color: var(--tk-accent); color: var(--tk-accent); }
+.tk-filter-chip i { font-size: 13px; }
+
+/* Active filter tags */
+.tk-active-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  padding: 0 18px 12px;
+}
+.tk-active-filter-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  background: var(--tk-accent-soft);
+  border: 1px solid rgba(46,184,114,0.25);
+  border-radius: 20px;
+  font-size: 11px;
+  color: var(--tk-accent);
+}
+.tk-active-filter-tag-label { color: var(--tk-text-muted); font-size: 10.5px; margin-right: 2px; }
+.tk-active-filter-remove {
+  background: none; border: none; padding: 0;
+  color: var(--tk-accent); cursor: pointer; font-size: 14px;
+  display: inline-flex; line-height: 1; opacity: 0.7; margin-left: 2px;
+}
+.tk-active-filter-remove:hover { opacity: 1; }
+
+/* ── Manual Filters Panel ── */
+.tk-manual-filters-panel {
+  background: var(--tk-bg-surface);
+  border: 1px solid var(--tk-border-default);
+  border-radius: var(--tk-radius-lg);
+  padding: 20px;
+  margin-bottom: 16px;
+  animation: tk-scale-in 0.18s ease forwards;
+}
+.tk-manual-filters-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.tk-manual-filters-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--tk-text-primary);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.tk-manual-filters-title i { color: var(--tk-accent); font-size: 15px; }
+.tk-manual-filters-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+@media (max-width: 1024px) { .tk-manual-filters-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px)  { .tk-manual-filters-grid { grid-template-columns: 1fr; } }
+.tk-filter-field-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--tk-text-secondary);
+  margin-bottom: 6px;
+  letter-spacing: 0.03em;
+}
+
+/* ── Results Header ── */
+.tk-results-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--tk-border-subtle);
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.tk-results-count-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.tk-results-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 11px;
+  background: var(--tk-accent-soft);
+  border: 1px solid rgba(46,184,114,0.2);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--tk-accent);
+}
+.tk-results-label {
+  font-size: 13px;
+  color: var(--tk-text-secondary);
+}
+
+/* ── Prospect Avatar (initials) ── */
+.tk-prospect-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  letter-spacing: 0.02em;
+}
+.tk-prospect-avatar.av0 { background: linear-gradient(135deg, #2EB872, #1a9d5c); }
+.tk-prospect-avatar.av1 { background: linear-gradient(135deg, #8957E5, #6b3ec9); }
+.tk-prospect-avatar.av2 { background: linear-gradient(135deg, #38BDF8, #0ea5e9); }
+.tk-prospect-avatar.av3 { background: linear-gradient(135deg, #F0883E, #d4641a); }
+.tk-prospect-avatar.av4 { background: linear-gradient(135deg, #F85149, #c93030); }
+.tk-prospect-avatar.av5 { background: linear-gradient(135deg, #E3B341, #b88a15); }
+
+.tk-prospect-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.tk-prospect-name-info { min-width: 0; }
+
+/* Email status badges */
+.tk-email-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: var(--tk-radius-sm);
+  font-size: 11px;
+  font-weight: 500;
+}
+.tk-email-badge.verified   { background: var(--tk-green-soft);  border: 1px solid rgba(46,184,114,0.2);  color: var(--tk-green); }
+.tk-email-badge.guessed    { background: var(--tk-yellow-soft); border: 1px solid rgba(227,179,65,0.2);  color: var(--tk-yellow); }
+.tk-email-badge.no-email   { background: var(--tk-bg-overlay);  border: 1px solid var(--tk-border-subtle); color: var(--tk-text-muted); }
+
+/* ── Empty state ── */
+.tk-prospect-empty-state {
+  text-align: center;
+  padding: 56px 32px;
+}
+.tk-prospect-empty-icon {
+  width: 72px; height: 72px;
+  background: var(--tk-bg-raised);
+  border: 1px solid var(--tk-border-default);
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: var(--tk-text-muted);
+  margin-bottom: 18px;
+}
+.tk-prospect-empty-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--tk-text-primary);
+  margin: 0 0 8px;
+}
+.tk-prospect-empty-sub {
+  font-size: 13px;
+  color: var(--tk-text-muted);
+  max-width: 340px;
+  margin: 0 auto 20px;
+  line-height: 1.7;
+}
+
+/* ── Search Summary Bar (collapsed state) ── */
+.tk-search-summary-bar {
+  background: var(--tk-bg-surface);
+  border: 1px solid var(--tk-border-default);
+  border-radius: var(--tk-radius-lg);
+  padding: 14px 20px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  animation: tk-scale-in 0.2s ease forwards;
+  position: relative;
+  overflow: hidden;
+}
+.tk-search-summary-bar::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--tk-accent), var(--tk-purple));
+  border-radius: 3px 0 0 3px;
+}
+.tk-search-summary-icon {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--tk-accent-soft);
+  border: 1px solid rgba(46,184,114,0.2);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--tk-accent);
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.tk-search-summary-body { flex: 1; min-width: 0; }
+.tk-search-summary-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--tk-text-muted);
+  margin-bottom: 3px;
+}
+.tk-search-summary-query {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--tk-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 520px;
+}
+.tk-search-summary-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 6px;
+}
+.tk-search-summary-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 9px;
+  background: var(--tk-bg-overlay);
+  border: 1px solid var(--tk-border-default);
+  border-radius: 20px;
+  font-size: 11px;
+  color: var(--tk-text-secondary);
+  white-space: nowrap;
+}
+.tk-search-summary-chip span { color: var(--tk-text-muted); margin-right: 1px; }
+.tk-search-summary-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* ── Search Loading State Banner ── */
+.tk-search-loading-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 20px;
+  background: var(--tk-accent-soft);
+  border: 1px solid rgba(46,184,114,0.2);
+  border-radius: var(--tk-radius-lg);
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: var(--tk-accent);
+  font-weight: 500;
+  animation: tk-pulse 1.4s ease-in-out infinite;
+}
+.tk-search-loading-bar i { font-size: 18px; }
+
+/* ── No-results inline hint ── */
+.tk-search-no-results-hint {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 18px;
+  background: var(--tk-yellow-soft);
+  border: 1px solid rgba(227,179,65,0.2);
+  border-radius: var(--tk-radius-lg);
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: var(--tk-text-secondary);
+}
+.tk-search-no-results-hint i { color: var(--tk-yellow); font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+.tk-search-no-results-hint strong { color: var(--tk-yellow); }
+
+/* ── Collapsible section fade ── */
+.tk-panel-collapsed { display: none; }
+.tk-panel-expanded  { animation: tk-scale-in 0.18s ease forwards; }
+
+/* ════════════════════════════════════════════════════════════
+   INLINE FILTER DROPDOWNS  (compact header-level filters)
+   ════════════════════════════════════════════════════════════ */
+
+/* Wrapper row that sits between page-header and table */
+.tk-inline-filters {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+.tk-inline-filters-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--tk-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-right: 2px;
+  flex-shrink: 0;
+}
+
+/* Divider between filter groups */
+.tk-inline-filter-divider {
+  width: 1px;
+  height: 16px;
+  background: var(--tk-border-default);
+  flex-shrink: 0;
+  margin: 0 2px;
+}
+
+/* Trigger button */
+.tk-filter-dropdown { position: relative; }
+
+.tk-filter-dropdown-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  background: var(--tk-bg-raised);
+  border: 1px solid var(--tk-border-default);
+  border-radius: var(--tk-radius-md);
+  font-size: 12px;
+  color: var(--tk-text-secondary);
+  cursor: pointer;
+  transition: border-color .15s, color .15s, background .15s, box-shadow .15s;
+  font-family: inherit;
+  white-space: nowrap;
+  height: 30px;
+}
+.tk-filter-dropdown-btn:hover {
+  border-color: var(--tk-border-strong);
+  color: var(--tk-text-primary);
+}
+.tk-filter-dropdown-btn.active {
+  background: var(--tk-accent-soft);
+  border-color: rgba(46,184,114,0.4);
+  color: var(--tk-accent);
+}
+.tk-filter-dropdown-btn .tk-fdb-caret {
+  font-size: 14px;
+  opacity: 0.6;
+  margin-left: 1px;
+}
+.tk-filter-dropdown-btn .tk-fdb-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Floating menu */
+.tk-filter-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  min-width: 168px;
+  background: var(--tk-bg-overlay);
+  border: 1px solid var(--tk-border-default);
+  border-radius: var(--tk-radius-lg);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.4), 0 2px 6px rgba(0,0,0,0.2);
+  z-index: 600;
+  overflow: hidden;
+  padding: 4px;
+  animation: tk-scale-in 0.12s ease forwards;
+}
+
+/* Menu items */
+.tk-filter-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 7px 10px;
+  background: none;
+  border: none;
+  border-radius: var(--tk-radius-sm);
+  font-size: 12.5px;
+  color: var(--tk-text-secondary);
+  cursor: pointer;
+  text-align: left;
+  transition: background .1s, color .1s;
+  font-family: inherit;
+}
+.tk-filter-dropdown-item:hover {
+  background: var(--tk-bg-hover);
+  color: var(--tk-text-primary);
+}
+.tk-filter-dropdown-item.selected {
+  color: var(--tk-accent);
+  background: var(--tk-accent-soft);
+  font-weight: 500;
+}
+.tk-filter-dropdown-item .tk-fdi-check {
+  margin-left: auto;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.tk-filter-dropdown-item .tk-fdi-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Active filter summary strip below inline-filters (shows when ≥1 filter active) */
+.tk-active-filter-strip {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.tk-active-filter-strip-label {
+  font-size: 11px;
+  color: var(--tk-text-muted);
+  flex-shrink: 0;
+}
+.tk-active-filter-strip-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  background: var(--tk-bg-raised);
+  border: 1px solid var(--tk-border-default);
+  border-radius: 20px;
+  font-size: 11px;
+  color: var(--tk-text-secondary);
+}
+.tk-active-filter-strip-tag button {
+  background: none; border: none; padding: 0; line-height: 1;
+  color: var(--tk-text-muted); cursor: pointer; font-size: 13px;
+  display: inline-flex; margin-left: 2px;
+}
+.tk-active-filter-strip-tag button:hover { color: var(--tk-red); }
+
+/* Stats strip */
+.tk-prospect-stats-strip {
+  display: flex;
+  gap: 24px;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--tk-border-subtle);
+  flex-wrap: wrap;
+}
+.tk-prospect-stat {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--tk-text-secondary);
+}
+.tk-prospect-stat-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.tk-prospect-stat-dot.green  { background: var(--tk-green); }
+.tk-prospect-stat-dot.purple { background: var(--tk-purple); }
+.tk-prospect-stat-dot.cyan   { background: var(--tk-cyan); }
+.tk-prospect-stat strong { color: var(--tk-text-primary); margin-right: 3px; }
+
+/* ── O22. GENERAL: Sticky sidebar pattern (shared) ── */
+.tk-sidebar-sticky {
+  position: sticky;
+  top: 70px;
+  margin-bottom: 0;
+}
+
+.tk-wa-connect { padding: 0; }
+
+.tk-wa-onboard {
+  background: linear-gradient(135deg, var(--tk-green-soft, #e8f7ef) 0%, #000000  100%);
+  border: 1px solid var(--tk-border-default, #e5e7eb);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.tk-wa-prereq-notice {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 14px; margin-bottom: 16px; border-radius: 8px;
+  background: rgba(234,179,8,0.10); border: 1px solid rgba(234,179,8,0.30);
+  font-size: 13px; color: var(--tk-text-secondary, #4b5563);
+}
+.tk-wa-prereq-notice .uil { font-size: 16px; color: #ca8a04; flex-shrink: 0; }
+.tk-wa-prereq-notice strong { color: var(--tk-text-primary, #111827); }
+
+.tk-wa-onboard-steps { display: flex; flex-direction: column; gap: 10px; margin-bottom: 18px; }
+
+.tk-wa-step { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--tk-text-secondary, #4b5563); }
+
+.tk-wa-step span {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 24px; height: 24px; border-radius: 50%;
+  background: #25D366; color: #fff;
+  font-weight: 600; font-size: 12px; flex-shrink: 0;
+}
+
+.tk-btn-wa {
+  background: #25D366; color: #fff; border: none;
+  padding: 12px 20px; border-radius: 10px;
+  font-weight: 600; font-size: 14px; width: 100%;
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: transform .1s, box-shadow .1s;
+}
+.tk-btn-wa:hover:not(:disabled) { background: #1ebe5b; box-shadow: 0 4px 12px rgba(37,211,102,.3); transform: translateY(-1px); }
+.tk-btn-wa:disabled { opacity: .6; cursor: not-allowed; }
+.tk-btn-wa .uil { font-size: 18px; margin-right: 8px; }
+
+.tk-wa-onboard-note { display: block; margin-top: 12px; font-size: 11px; color: var(--tk-text-muted, #9ca3af); text-align: center; }
+
+.tk-wa-connected-card {
+  display: flex; align-items: flex-start; gap: 14px; padding: 16px;
+  background: var(--tk-green-soft, #e8f7ef);
+  border: 1px solid rgba(37,211,102,.25); border-radius: 12px;
+}
+.tk-wa-connected-icon {
+  width: 44px; height: 44px; border-radius: 10px;
+  background: #25D366; color: #fff;
+  display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0;
+}
+.tk-wa-connected-body { flex: 1; min-width: 0; }
+.tk-wa-connected-name { font-weight: 600; font-size: 14px; color: var(--tk-text-primary, #111827); margin-bottom: 4px; }
+.tk-wa-connected-meta { display: flex; flex-wrap: wrap; gap: 10px; font-size: 12px; color: var(--tk-text-secondary, #4b5563); margin-top: 4px; }
+.tk-wa-connected-meta span { display: inline-flex; align-items: center; gap: 4px; }
+.tk-wa-connected-meta .uil { font-size: 14px; }
+
+.tk-spin { animation: tk-spin 1s linear infinite; }
+@keyframes tk-spin { to { transform: rotate(360deg); } }
+/* Scrollbar global */
+::-webkit-scrollbar       { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--tk-border-default); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--tk-border-strong); }
+
+
+/* ── O23. LEAD VIEW DRAWER — animations ── */
+@keyframes tk-slide-in-right {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+@keyframes tk-scale-in {
+  from { transform: scale(0.94); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+@keyframes tk-pulse {
+  0%, 100% { opacity: 1;   }
+  50%       { opacity: 0.4; }
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   TOAST NOTIFICATIONS  — Thinkone Design System
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Container (stacks multiple toasts) ── */
+.tk-toast-wrap {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 340px;
+  max-width: calc(100vw - 40px);
+  pointer-events: none;
+}
+
+/* ── Base card ── */
+.tk-toast {
+  pointer-events: all;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 14px 18px 14px;
+  background: var(--tk-bg-overlay);
+  border: 1px solid var(--tk-border-default);
+  border-radius: var(--tk-radius-lg);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55), 0 2px 8px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+  animation: tk-toast-slide-in 0.28s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+}
+
+.tk-toast.tk-toast--leaving {
+  animation: tk-toast-slide-out 0.22s ease-in forwards;
+}
+
+/* ── Left accent border per type ── */
+.tk-toast--success { border-left: 3px solid var(--tk-green); }
+.tk-toast--danger  { border-left: 3px solid var(--tk-red); }
+.tk-toast--warning { border-left: 3px solid var(--tk-yellow); }
+.tk-toast--info    { border-left: 3px solid var(--tk-cyan); }
+.tk-toast--primary { border-left: 3px solid var(--tk-accent); }
+
+/* ── Icon bubble ── */
+.tk-toast__icon {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--tk-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  margin-top: 1px;
+}
+
+.tk-toast--success .tk-toast__icon { background: var(--tk-green-soft);  color: var(--tk-green); }
+.tk-toast--danger  .tk-toast__icon { background: var(--tk-red-soft);    color: var(--tk-red); }
+.tk-toast--warning .tk-toast__icon { background: var(--tk-yellow-soft); color: var(--tk-yellow); }
+.tk-toast--info    .tk-toast__icon { background: var(--tk-cyan-soft);   color: var(--tk-cyan); }
+.tk-toast--primary .tk-toast__icon { background: var(--tk-accent-soft); color: var(--tk-accent); }
+
+/* ── Text area ── */
+.tk-toast__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.tk-toast__label {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  line-height: 1;
+}
+
+.tk-toast--success .tk-toast__label { color: var(--tk-green); }
+.tk-toast--danger  .tk-toast__label { color: var(--tk-red); }
+.tk-toast--warning .tk-toast__label { color: var(--tk-yellow); }
+.tk-toast--info    .tk-toast__label { color: var(--tk-cyan); }
+.tk-toast--primary .tk-toast__label { color: var(--tk-accent); }
+
+.tk-toast__message {
+  font-size: 13px;
+  color: var(--tk-text-primary);
+  line-height: 1.45;
+  word-break: break-word;
+}
+
+/* ── Close button ── */
+.tk-toast__close {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: var(--tk-text-muted);
+  cursor: pointer;
+  padding: 2px 4px;
+  line-height: 1;
+  font-size: 18px;
+  border-radius: var(--tk-radius-sm);
+  transition: color 0.15s, background 0.15s;
+  margin-top: -2px;
+}
+
+.tk-toast__close:hover {
+  color: var(--tk-text-primary);
+  background: var(--tk-bg-hover);
+}
+
+/* ── Progress bar ── */
+.tk-toast__progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  border-radius: 0 0 0 var(--tk-radius-lg);
+  animation: tk-toast-progress var(--tk-duration, 5000ms) linear forwards;
+}
+
+.tk-toast--success .tk-toast__progress { background: var(--tk-green); }
+.tk-toast--danger  .tk-toast__progress { background: var(--tk-red); }
+.tk-toast--warning .tk-toast__progress { background: var(--tk-yellow); }
+.tk-toast--info    .tk-toast__progress { background: var(--tk-cyan); }
+.tk-toast--primary .tk-toast__progress { background: var(--tk-accent); }
+
+/* ── Keyframes ── */
+@keyframes tk-toast-slide-in {
+  from { opacity: 0; transform: translateX(32px) scale(0.97); }
+  to   { opacity: 1; transform: translateX(0)    scale(1); }
+}
+
+@keyframes tk-toast-slide-out {
+  from { opacity: 1; transform: translateX(0); max-height: 120px; margin-bottom: 0; }
+  to   { opacity: 0; transform: translateX(32px); max-height: 0;   margin-bottom: -10px; }
+}
+
+
+/* ════════════════════════════════════════════════════════════
+   Q. DEALS LIST PAGE — DealsList.jsx
+   ════════════════════════════════════════════════════════════ */
+
+/* ── Q1. KPI Stats Row ── */
+.tk-stats-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);   /* mobile: 2 per row */
+  gap: 10px;
+  margin-bottom: 16px;
+}
+@media (min-width: 576px) {
+  .tk-stats-row { grid-template-columns: repeat(3, 1fr); }  /* small tablet: 3 */
+}
+@media (min-width: 768px) {
+  .tk-stats-row { grid-template-columns: repeat(4, 1fr); }  /* tablet: 4 */
+}
+@media (min-width: 992px) {
+  .tk-stats-row { grid-template-columns: repeat(5, 1fr); }  /* desktop: 5 */
+}
+@media (min-width: 1400px) {
+  .tk-stats-row { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); } /* large: fill freely */
+}
+
+/* ── Q2. Stage Filter Pill Tabs ── */
+.tk-stage-filter-tabs {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.tk-stage-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  font-size: 11.5px;
+  padding: 5px 13px;
+  border-radius: 20px;
+  border: 0.5px solid var(--tk-border-default);
+  background: var(--tk-bg-raised);
+  color: var(--tk-text-secondary);
+  font-weight: 500;
+  transition: all 0.14s;
+  white-space: nowrap;
+  font-family: inherit;
+  line-height: 1;
+}
+
+.tk-stage-tab i { font-size: 13px; }
+
+.tk-stage-tab:hover {
+  background: var(--tk-bg-hover);
+  color: var(--tk-text-primary);
+  border-color: var(--tk-border-strong);
+}
+
+.tk-stage-tab.active {
+  background: var(--tk-accent-soft);
+  color: var(--tk-accent);
+  border-color: var(--tk-accent-glow);
+  font-weight: 700;
+}
+
+/* ── Q3. Search + Filter Toolbar ── */
+.tk-list-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.tk-list-toolbar-search {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+  max-width: 380px;
+}
+
+.tk-list-toolbar-search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--tk-text-muted);
+  font-size: 15px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.tk-list-toolbar-search-input {
+  padding-left: 32px !important;
+  padding-right: 34px !important;
+  background: var(--tk-bg-raised) !important;
+  border: 0.5px solid var(--tk-border-default) !important;
+  color: var(--tk-text-primary) !important;
+  border-radius: var(--tk-radius-md) !important;
+  font-size: 12.5px !important;
+  height: 34px !important;
+  transition: border-color 0.15s !important;
+}
+
+.tk-list-toolbar-search-input:focus {
+  border-color: var(--tk-accent-glow) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(46,184,114,0.08) !important;
+}
+
+.tk-list-toolbar-search-input::placeholder {
+  color: var(--tk-text-muted) !important;
+}
+
+.tk-list-toolbar-search-clear {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--tk-text-muted);
+  cursor: pointer;
+  padding: 2px;
+  font-size: 14px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  border-radius: 3px;
+  transition: color 0.12s;
+}
+.tk-list-toolbar-search-clear:hover { color: var(--tk-text-primary); }
+
+.tk-list-toolbar-filters {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tk-list-toolbar-select {
+  background: var(--tk-bg-raised) !important;
+  border: 0.5px solid var(--tk-border-default) !important;
+  color: var(--tk-text-secondary) !important;
+  border-radius: var(--tk-radius-md) !important;
+  font-size: 12px !important;
+  height: 34px !important;
+  padding: 0 10px !important;
+  cursor: pointer;
+  transition: border-color 0.15s;
+  font-family: inherit !important;
+}
+.tk-list-toolbar-select:focus {
+  border-color: var(--tk-accent-glow) !important;
+  outline: none !important;
+}
+
+/* ── Q4. Table cell helpers ── */
+.tk-link-strong {
+  font-weight: 600;
+  color: var(--tk-text-primary);
+  text-decoration: none;
+  font-size: 13px;
+  transition: color 0.12s;
+}
+.tk-link-strong:hover {
+  color: var(--tk-accent);
+  text-decoration: none;
+}
+
+.tk-cell-success { color: var(--tk-green);  font-weight: 600; }
+.tk-cell-warn    { color: var(--tk-yellow); font-weight: 600; }
+.tk-cell-danger  { color: var(--tk-red);    font-weight: 600; }
+
+.tk-amount-cell {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--tk-text-primary);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.2px;
+}
+
+/* ── Q5. Owner avatar chip ── */
+.tk-owner-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12.5px;
+  color: var(--tk-text-secondary);
+}
+
+.tk-owner-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--tk-accent-soft);
+  color: var(--tk-accent);
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  text-transform: uppercase;
+  border: 1px solid var(--tk-accent-glow);
+}
+
+/* ── Q6. Win-probability mini bar ── */
+.tk-prob-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 56px;
+}
+
+.tk-prob-label {
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.tk-prob-label.high   { color: var(--tk-green);  }
+.tk-prob-label.medium { color: var(--tk-yellow); }
+.tk-prob-label.low    { color: var(--tk-red);    }
+.tk-prob-label.none   { color: var(--tk-text-muted); font-weight: 400; }
+
+.tk-prob-track {
+  height: 3px;
+  background: var(--tk-bg-overlay);
+  border-radius: 2px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.tk-prob-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+.tk-prob-fill.high   { background: var(--tk-green);  }
+.tk-prob-fill.medium { background: var(--tk-yellow); }
+.tk-prob-fill.low    { background: var(--tk-red);    }
+
+
+/* ════════════════════════════════════════════════════════════
+   R. DEALS PIPELINE PAGE — DealsPipeline.jsx
+   ════════════════════════════════════════════════════════════ */
+
+/* ── R1. Segmented stepper stage bar ── */
+.tk-stage-stepper {
+  display: flex;
+  align-items: stretch;
+  background: var(--tk-bg-surface);
+  border: 0.5px solid var(--tk-border-subtle);
+  border-radius: var(--tk-radius-lg);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.tk-stage-step {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 3px;
+  padding: 12px 6px;
+  position: relative;
+  text-align: center;
+  border-right: 0.5px solid var(--tk-border-subtle);
+  transition: background 0.15s;
+  cursor: default;
+  min-width: 0;
+}
+.tk-stage-step:last-child { border-right: none; }
+
+/* States */
+.tk-stage-step.done   { background: rgba(46,184,114,0.06);  }
+.tk-stage-step.active { background: rgba(46,184,114,0.12); }
+.tk-stage-step.future { background: transparent; }
+.tk-stage-step.won    { background: rgba(46,184,114,0.14); }
+.tk-stage-step.lost   { background: rgba(248,81,73,0.10);  }
+.tk-stage-step.unused { background: transparent; opacity: 0.35; }
+
+/* Top accent bar on active step */
+.tk-stage-step.active::before,
+.tk-stage-step.won::before,
+.tk-stage-step.lost::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+}
+.tk-stage-step.active::before { background: var(--tk-accent); }
+.tk-stage-step.won::before    { background: var(--tk-green);  }
+.tk-stage-step.lost::before   { background: var(--tk-red);    }
+
+/* Step icon */
+.tk-stage-step-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+.tk-stage-step.done   .tk-stage-step-icon { color: var(--tk-green);        }
+.tk-stage-step.active .tk-stage-step-icon { color: var(--tk-accent);       }
+.tk-stage-step.future .tk-stage-step-icon { color: var(--tk-text-disabled);}
+.tk-stage-step.won    .tk-stage-step-icon { color: var(--tk-green);        }
+.tk-stage-step.lost   .tk-stage-step-icon { color: var(--tk-red);          }
+.tk-stage-step.unused .tk-stage-step-icon { color: var(--tk-text-disabled);}
+
+/* Step name */
+.tk-stage-step-name {
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.tk-stage-step.done   .tk-stage-step-name { color: var(--tk-green);          }
+.tk-stage-step.active .tk-stage-step-name { color: var(--tk-accent);         }
+.tk-stage-step.future .tk-stage-step-name { color: var(--tk-text-muted);     }
+.tk-stage-step.won    .tk-stage-step-name { color: var(--tk-green);          }
+.tk-stage-step.lost   .tk-stage-step-name { color: var(--tk-red);            }
+.tk-stage-step.unused .tk-stage-step-name { color: var(--tk-text-disabled);  }
+
+/* ── R2. Pipeline sidebar mini stat row ── */
+.tk-pipeline-kv {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 8px 0;
+  border-bottom: 0.5px solid var(--tk-border-subtle);
+  font-size: 12.5px;
+  gap: 8px;
+}
+.tk-pipeline-kv:last-child { border-bottom: none; padding-bottom: 0; }
+.tk-pipeline-kv-label {
+  color: var(--tk-text-muted);
+  flex-shrink: 0;
+  min-width: 90px;
+}
+.tk-pipeline-kv-value {
+  color: var(--tk-text-primary);
+  font-weight: 500;
+  text-align: right;
+}
+
+/* ── R3. Probability mini-bar in sidebar ── */
+.tk-pipeline-prob-bar {
+  height: 4px;
+  background: var(--tk-bg-overlay);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+.tk-pipeline-prob-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+.tk-pipeline-prob-fill.high   { background: var(--tk-green);  }
+.tk-pipeline-prob-fill.medium { background: var(--tk-yellow); }
+.tk-pipeline-prob-fill.low    { background: var(--tk-red);    }
+
+/* ── R4. Inline confirm prompt (replaces window.confirm) ── */
+.tk-inline-confirm {
+  background: var(--tk-red-soft);
+  border: 0.5px solid var(--tk-red-glow);
+  border-radius: var(--tk-radius-lg);
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--tk-text-primary);
+  animation: tk-scale-in 0.15s ease;
+}
+.tk-inline-confirm-text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+.tk-inline-confirm-text i { color: var(--tk-red); font-size: 16px; flex-shrink: 0; }
+.tk-inline-confirm-actions { display: flex; gap: 7px; flex-shrink: 0; }
+
+
+/* ════════════════════════════════════════════════════════════
+   S. DEAL ACTION FORMS — missing layout helpers
+   ════════════════════════════════════════════════════════════ */
+
+/* ── S1. Two-column form grid ── */
+.tk-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+@media (max-width: 600px) {
+  .tk-two-col { grid-template-columns: 1fr; }
+}
+
+/* ── S2. Section divider title ── */
+.tk-form-section-title {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 0 4px;
+  border-top: 0.5px solid var(--tk-border-subtle);
+  margin-top: 4px;
+}
+.tk-form-section-title i {
+  font-size: 15px;
+  color: var(--tk-text-muted);
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+.tk-form-section-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--tk-text-muted);
+}
+.tk-form-section-sub {
+  font-size: 11.5px;
+  color: var(--tk-text-muted);
+  margin-top: 1px;
+}
+
+/* ── S3. Field label hint (in parentheses) ── */
+.tk-field-hint {
+  font-weight: 400;
+  font-size: 11px;
+  color: var(--tk-text-muted);
+}
+
+/* ── S4. CSS checkbox toggle switch ── */
+/* Usage: <label class="tk-toggle-switch">
+            <input type="checkbox" checked onChange={...} />
+            <span class="tk-toggle-slider" />
+          </label>                                          */
+.tk-toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+}
+.tk-toggle-switch {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.tk-toggle-switch input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.tk-toggle-slider {
+  display: block;
+  width: 40px;
+  height: 22px;
+  background: var(--tk-bg-hover);
+  border: 0.5px solid var(--tk-border-default);
+  border-radius: 12px;
+  position: relative;
+  transition: background 0.2s, border-color 0.2s;
+}
+.tk-toggle-slider::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--tk-text-muted);
+  transition: transform 0.2s, background 0.2s;
+}
+.tk-toggle-switch input:checked + .tk-toggle-slider {
+  background: var(--tk-accent-soft);
+  border-color: var(--tk-accent-glow);
+}
+.tk-toggle-switch input:checked + .tk-toggle-slider::after {
+  transform: translateX(18px);
+  background: var(--tk-accent);
+}
+.tk-toggle-label {
+  font-size: 12.5px;
+  color: var(--tk-text-secondary);
+}
+
+/* ── S5. Contract summary highlight box ── */
+.tk-contract-summary-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--tk-accent-soft);
+  border: 0.5px solid var(--tk-accent-glow);
+  border-radius: var(--tk-radius-lg);
+  padding: 12px 16px;
+}
+.tk-contract-summary-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--tk-accent);
+}
+.tk-contract-summary-amount {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--tk-accent);
+  letter-spacing: -0.5px;
+}
+
+/* ── S6. Won confirmation meta row ── */
+.tk-deal-won-meta {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  font-size: 12.5px;
+  color: var(--tk-text-muted);
+}
+.tk-deal-won-meta strong { color: var(--tk-text-primary); }
+
+/* ── S7. Progressive disclosure "expand optional" panel ── */
+.tk-expand-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 0.5px dashed var(--tk-border-default);
+  border-radius: var(--tk-radius-md);
+  color: var(--tk-text-muted);
+  font-size: 12px;
+  font-family: inherit;
+  padding: 7px 12px;
+  cursor: pointer;
+  width: 100%;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+  text-align: left;
+}
+.tk-expand-toggle:hover {
+  border-color: var(--tk-border-strong);
+  color: var(--tk-text-secondary);
+  background: var(--tk-bg-raised);
+}
+.tk-expand-toggle i { font-size: 14px; }
+.tk-expand-toggle .tk-expand-caret {
+  margin-left: auto;
+  font-size: 13px;
+  transition: transform 0.2s;
+}
+.tk-expand-toggle.open .tk-expand-caret { transform: rotate(180deg); }
+
+/* The collapsible panel itself */
+.tk-optional-panel {
+  background: var(--tk-bg-raised);
+  border: 0.5px solid var(--tk-border-subtle);
+  border-radius: var(--tk-radius-lg);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  animation: tk-scale-in 0.15s ease;
+}
+
+@keyframes tk-toast-progress {
+  from { width: 100%; }
+  to   { width: 0%; }
+}
+
+
+/* ── Input with prefix (e.g. ₹ currency) ── */
+.tk-input-prefix-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.tk-input-prefix {
+  position: absolute;
+  left: 10px;
+  color: var(--tk-text-muted);
+  font-size: 13px;
+  pointer-events: none;
+  z-index: 1;
+}
+.tk-input-with-prefix {
+  padding-left: 26px !important;
+}
+

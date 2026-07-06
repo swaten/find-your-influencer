@@ -1,0 +1,43 @@
+/* ============================================================
+   THINKONE — Obsidian Gold (Executive AI Edition)
+   File: resources/css/thinkone-obsidian.css
+   ============================================================ */
+
+:root {
+  --tk-bg-base:      #09090B;   /* Neutral obsidian black */
+  --tk-bg-surface:   #121214;   /* Polished panel look */
+  --tk-bg-raised:    #1A1A1D;   /* Input depth */
+  --tk-bg-overlay:   #242427;   /* Elevated menus */
+  --tk-bg-hover:     #2A2A2E;   /* Interaction */
+
+  --tk-border-subtle:  rgba(255, 255, 255, 0.03);
+  --tk-border-default: rgba(255, 255, 255, 0.07);
+  --tk-border-strong:  rgba(255, 255, 255, 0.12);
+
+  --tk-text-primary:   #FAFAFA;
+  --tk-text-secondary: #A1A1AA; 
+  --tk-text-muted:     #52525B;
+
+  /* Accent — Amber Gold (Executive Feel) */
+  --tk-accent:       #F59E0B;
+  --tk-accent-soft:  rgba(245, 158, 11, 0.08);
+  --tk-accent-glow:  rgba(245, 158, 11, 0.15);
+  --tk-accent-hover: #FBBF24;
+
+  --tk-green:        #10B981;
+  --tk-red:          #EF4444;
+
+  --tk-sidebar-width: 220px;
+  --tk-navbar-height: 50px;
+  --tk-radius-md:  4px; /* Sharper corners for a more formal look */
+}
+
+/* Structural Sync */
+body { background-color: var(--tk-bg-base); color: var(--tk-text-primary); font-family: 'Inter', sans-serif; font-size: 13px; margin: 0; }
+.tk-navbar { background: var(--tk-bg-surface); border-bottom: 0.5px solid var(--tk-border-subtle); position: fixed; top: 0; width: 100%; height: var(--tk-navbar-height); display: flex; align-items: center; padding: 0 18px; z-index: 1040; }
+.brand-icon { width: 28px; height: 28px; background: var(--tk-accent); border-radius: var(--tk-radius-md); display: flex; align-items: center; justify-content: center; color: #000; font-weight: 700; }
+.tk-sidebar { background: var(--tk-bg-surface); width: var(--tk-sidebar-width); position: fixed; top: var(--tk-navbar-height); bottom: 0; border-right: 0.5px solid var(--tk-border-subtle); display: flex; flex-direction: column; }
+.tk-nav-item.active { background: var(--tk-accent-soft); color: var(--tk-accent); border-left: 2px solid var(--tk-accent); }
+.tk-btn-primary { background: var(--tk-accent); color: #000; padding: 7px 14px; border-radius: var(--tk-radius-md); font-weight: 600; cursor: pointer; border: none; }
+.tk-table thead th { background: var(--tk-bg-raised); color: var(--tk-text-muted); padding: 10px 18px; font-size: 10.5px; text-transform: uppercase; border-bottom: 0.5px solid var(--tk-border-default); }
+.tk-table td { padding: 11px 18px; border-bottom: 0.5px solid var(--tk-border-subtle); color: var(--tk-text-primary); }
